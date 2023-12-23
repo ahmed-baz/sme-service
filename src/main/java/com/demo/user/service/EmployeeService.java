@@ -1,15 +1,13 @@
 package com.demo.user.service;
 
-import com.demo.user.model.Employee;
 import com.demo.user.feign.EmployeeProxy;
+import com.demo.user.model.Employee;
 import com.demo.user.repo.EmployeeRepo;
 import com.demo.user.vo.BaseData;
 import com.demo.user.vo.EmployeeVO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,18 +21,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Service
-@Setter
-@Getter
+@RequiredArgsConstructor
 public class EmployeeService {
 
     private final String outputHeader = "ID,FIRST_NAME,LAST_NAME,EMAIL,SALARY \n";
     private final String reportHeader = "EMAIL,FOUND \n";
     @Value("${user.number}")
     private int userNo;
-    @Autowired
-    private EmployeeUtil employeeUtil;
-    @Autowired
-    private EmployeeRepo employeeRepo;
+    private final EmployeeRepo employeeRepo;
     @Value("${employees.sheet.path}")
     private String employeesSheetPath;
     @Value("${report.path}")
@@ -44,20 +38,20 @@ public class EmployeeService {
     private RestTemplate restTemplate = new RestTemplate();
     private final static String baseUrl = "http://localhost:9999/employee/";
     private Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
-    @Autowired
-    private EmployeeProxy employeeProxy;
+    private final EmployeeProxy employeeProxy;
 
-    public List<Employee> getEmployeeList() {
-        List<Employee> employeeList = getEmployeeUtil().getEmployeeList(getUserNo());
-        return getEmployeeRepo().saveAll(employeeList);
+    public List<Employee> createEmployeeList() {
+        List<Employee> employeeList = EmployeeUtil.getEmployeeList(userNo);
+        return employeeRepo.saveAll(employeeList);
     }
 
-    public void addEmployeeList() {
+    public List<Employee> addEmployeeList() {
+        List<Employee> employeeList = new ArrayList<>();
         try {
             //start = System.currentTimeMillis();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(getEmployeesSheetPath()), StandardCharsets.UTF_8));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(employeesSheetPath), StandardCharsets.UTF_8));
             writer.write(outputHeader);
-            List<Employee> employeeList = getEmployeeUtil().getEmployeeList(getUserNo());
+            employeeList = EmployeeUtil.getEmployeeList(userNo);
             saveEmployeeList(employeeList);
             for (Employee employee : employeeList) {
                 StringBuilder builder = new StringBuilder(String.valueOf(employee.getId())).append(",");
@@ -72,17 +66,18 @@ public class EmployeeService {
         } finally {
             // end = System.currentTimeMillis();
         }
+        return employeeList;
     }
 
     private void saveEmployeeList(List<Employee> employeeList) {
-        getEmployeeRepo().saveAll(employeeList);
+        employeeRepo.saveAll(employeeList);
     }
 
     public long validateEmployees() {
         Map<String, Integer> mailCount = new HashMap<>();
         start = System.currentTimeMillis();
         try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(getReportSheetPath()), StandardCharsets.UTF_8));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(reportSheetPath), StandardCharsets.UTF_8));
             Scanner empScanner = new Scanner(new File(employeesSheetPath), "UTF-8");
             empScanner.nextLine();
             writer.write(reportHeader);
@@ -91,7 +86,7 @@ public class EmployeeService {
                 String[] userDataList = row.split(",");
                 String email = userDataList[3];
                 if (null != email && !email.isEmpty()) {
-                    List<Employee> employeeList = getEmployeeRepo().findEmployeeByEmail(email);
+                    List<Employee> employeeList = employeeRepo.findEmployeeByEmail(email);
                     mailCount.put(email, employeeList.size());
                 }
             }
@@ -113,7 +108,7 @@ public class EmployeeService {
     }
 
     public Employee findEmployeeById(int id) {
-        EmployeeVO employee = getEmployeeProxy().findEmployeeById(id); //findEmployee(id);
+        EmployeeVO employee = employeeProxy.findEmployeeById(id); //findEmployee(id);
         BaseData baseData = employee != null ? employee.getBaseData() : null;
         Employee emp = new Employee();
         emp.setFirstName(baseData != null ? baseData.getFirstName() : null);
@@ -129,7 +124,7 @@ public class EmployeeService {
         ResponseEntity<String> response = restTemplate.getForEntity(url.toString(), String.class);
         //boolean success = HttpStatus.OK.equals(response.getStatusCode());
         if (response.getBody() != null) {
-            return getGson().fromJson(response.getBody(), EmployeeVO.class);
+            return gson.fromJson(response.getBody(), EmployeeVO.class);
         }
         return null;
     }

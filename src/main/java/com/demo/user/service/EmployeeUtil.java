@@ -2,9 +2,7 @@ package com.demo.user.service;
 
 
 import com.demo.user.model.Employee;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.stereotype.Service;
+import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -12,9 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-@Getter
-@Setter
-@Service
+@UtilityClass
 public class EmployeeUtil {
 
     private String names[] = {"Ahmed", "Ali", "Hassan", "Mohamed", "Said", "Saad", "Mostafa", "Ibrahim"};
