@@ -14,7 +14,7 @@ import java.util.Random;
 public class EmployeeUtil {
 
     private String names[] = {"Ahmed", "Ali", "Hassan", "Mohamed", "Said", "Saad", "Mostafa", "Ibrahim"};
-    private String mail[] = {"fawry.com", "gmail.com", "yahoo.com", "outlook.com", "hotmail", "skyros.com", "eme.com", "fpcard.com"};
+    private String mail[] = {"fawry.com", "gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "new.markets.com", "stc.com", "stc.pay.com"};
     private BigDecimal salary[] = {BigDecimal.valueOf(5000), BigDecimal.valueOf(6000), BigDecimal.valueOf(7000), BigDecimal.valueOf(8000), BigDecimal.valueOf(9000), BigDecimal.valueOf(10000), BigDecimal.valueOf(11000), BigDecimal.valueOf(12000)};
     private int max = 7;
     private int min = 0;
