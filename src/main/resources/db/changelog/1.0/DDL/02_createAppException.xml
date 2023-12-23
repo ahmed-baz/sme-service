@@ -1,0 +1,26 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create_app_exception" author="Ahmed.Baz" labels="app_exception">
+        <sql>
+            CREATE TABLE APP_EXCEPTION
+            (
+                id                int8         NOT NULL,
+                CODE              varchar(255) NOT NULL,
+                MESSAGE           varchar(255) NOT NULL,
+                LOCALIZED_MESSAGE varchar(255) NOT NULL,
+                CONSTRAINT app_exception_pkey PRIMARY KEY (id),
+                CONSTRAINT app_exception_code_ukey UNIQUE (CODE)
+            );
+        </sql>
+        <sql>
+            CREATE SEQUENCE APP_EXCEPTION_SEQUENCE
+                INCREMENT 1
+                START 1;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

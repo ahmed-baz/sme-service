@@ -1,0 +1,31 @@
+package com.demo.user.exception;
+
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.http.HttpStatus;
+
+import java.util.Date;
+
+@Setter
+@Getter
+public class AppResponse {
+    private Date responseDate;
+    private HttpStatus httpStatus;
+    private String message;
+    private String details;
+    private Object data;
+
+    public AppResponse(Date responseDate, String message, String details) {
+        this.responseDate = responseDate;
+        this.message = message;
+        this.details = details;
+    }
+
+    public AppResponse(Date responseDate, HttpStatus httpStatus, String message, String details) {
+        this.responseDate = responseDate;
+        this.httpStatus = httpStatus;
+        this.message = message;
+        this.details = details;
+    }
+
+}

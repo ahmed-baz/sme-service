@@ -1,0 +1,51 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="add_app_exception" author="Ahmed.Baz" labels="app_exception">
+        <sql>
+            insert
+            into APP_EXCEPTION(ID,
+                               CODE,
+                               MESSAGE,
+                               LOCALIZED_MESSAGE)
+            values (nextval('APP_EXCEPTION_SEQUENCE'),
+                    'EMPLOYEE_NOT_FOUND',
+                    'the employee is not found',
+                    'the employee is not found');
+
+            insert
+            into APP_EXCEPTION(ID,
+                               CODE,
+                               MESSAGE,
+                               LOCALIZED_MESSAGE)
+            values (nextval('APP_EXCEPTION_SEQUENCE'),
+                    'USER_NOT_FOUND',
+                    'the user is not found',
+                    'the user is not found');
+
+            insert
+            into APP_EXCEPTION(ID,
+                               CODE,
+                               MESSAGE,
+                               LOCALIZED_MESSAGE)
+            values (nextval('APP_EXCEPTION_SEQUENCE'),
+                    'USER_NOT_ALLOWED',
+                    'the user is not allowed',
+                    'the user is not allowed');
+
+            insert
+            into APP_EXCEPTION(ID,
+                               CODE,
+                               MESSAGE,
+                               LOCALIZED_MESSAGE)
+            values (nextval('APP_EXCEPTION_SEQUENCE'),
+                    'EMAIL_IS_REQUIRED',
+                    'email is required',
+                    'email is required');
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

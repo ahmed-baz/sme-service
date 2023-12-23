@@ -1,9 +1,9 @@
 package com.demo.user.service;
 
-import com.demo.user.model.Employee;
+import com.demo.user.model.User;
 
 public interface UserService {
 
-    Employee findEmployeeById(Long id);
+    User findById(Long id);
 
 }

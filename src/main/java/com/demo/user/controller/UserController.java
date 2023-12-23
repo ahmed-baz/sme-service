@@ -1,6 +1,7 @@
 package com.demo.user.controller;
 
-import com.demo.user.model.Employee;
+import com.demo.user.model.User;
+import com.demo.user.permission.annotations.AdminOnly;
 import com.demo.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +17,10 @@ public class UserController {
 
     private final UserService userService;
 
+    @AdminOnly
     @GetMapping("/{id}")
-    public Employee findUser(@PathVariable Long id) {
-        return userService.findEmployeeById(id);
+    public User findUser(@PathVariable Long id) {
+        return userService.findById(id);
     }
 
 }

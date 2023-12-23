@@ -51,9 +51,9 @@ public class EmployeeUtil {
         return rand.nextInt((max - min) + 1) + min;
     }
 
-    private int getRandomId() {
+    private Long getRandomId() {
         Random rand = new Random();
-        return rand.nextInt(10000);
+        return rand.nextLong();
     }
 
 }

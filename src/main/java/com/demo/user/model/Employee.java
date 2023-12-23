@@ -1,5 +1,6 @@
 package com.demo.user.model;
 
+import com.demo.user.vo.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,11 +21,13 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EMPLOYEE_SEQ")
     @SequenceGenerator(name = "EMPLOYEE_SEQ", sequenceName = "EMPLOYEE_SEQ", allocationSize = 1)
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
     private BigDecimal salary;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
 }
 

@@ -86,8 +86,12 @@ public class EmployeeService {
                 String[] userDataList = row.split(",");
                 String email = userDataList[3];
                 if (null != email && !email.isEmpty()) {
-                    List<Employee> employeeList = employeeRepo.findEmployeeByEmail(email);
-                    mailCount.put(email, employeeList.size());
+                    Optional<Employee> employee = employeeRepo.findEmployeeByEmail(email);
+                    if (employee.isPresent()) {
+                        mailCount.put(email, 1);
+                    } else {
+                        mailCount.put(email, 0);
+                    }
                 }
             }
             Iterator<Map.Entry<String, Integer>> iterator = mailCount.entrySet().iterator();
