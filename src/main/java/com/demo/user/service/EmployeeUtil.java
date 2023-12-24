@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 @UtilityClass
 public class EmployeeUtil {
@@ -23,7 +24,7 @@ public class EmployeeUtil {
     @SneakyThrows
     public Employee createRandomEmployee(long sleep) {
         Employee employee = createRandomEmployee();
-        Thread.sleep(sleep);
+        TimeUnit.SECONDS.sleep(sleep);
         return employee;
     }
 

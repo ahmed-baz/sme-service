@@ -48,7 +48,7 @@ public class EmployeeService {
 
     @Async
     public void createEmployeeListAsync() {
-        List<Employee> employeeList = EmployeeUtil.getEmployeeList(userNo, 1000);
+        List<Employee> employeeList = EmployeeUtil.getEmployeeList(userNo, 1);
         employeeRepo.saveAll(employeeList);
     }
 

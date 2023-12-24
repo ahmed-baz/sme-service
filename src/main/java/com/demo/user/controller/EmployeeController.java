@@ -3,6 +3,7 @@ package com.demo.user.controller;
 import com.demo.user.exception.AppResponse;
 import com.demo.user.model.Employee;
 import com.demo.user.service.EmployeeService;
+import com.demo.user.service.UserExecutorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+    private final UserExecutorService userExecutorService;
 
     @GetMapping("/list/file")
     public AppResponse<List<Employee>> addEmployeeList() {
@@ -22,10 +24,10 @@ public class EmployeeController {
         return new AppResponse<>(employees);
     }
 
-    @GetMapping("/list/db")
-    public AppResponse<Void> createEmployeeList() {
-        employeeService.createEmployeeListAsync();
-        return new AppResponse<>();
+    @GetMapping("/list/db/{size}")
+    public AppResponse<List<Employee>> createEmployeeList(@PathVariable int size) {
+        List<Employee> employeeList = userExecutorService.createEmployeeList(size);
+        return new AppResponse<>(employeeList);
     }
 
     @GetMapping("/{id}")
