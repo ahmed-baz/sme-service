@@ -17,8 +17,9 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping("/list/file")
-    public List<Employee> addEmployeeList() {
-        return employeeService.addEmployeeList();
+    public AppResponse<List<Employee>> addEmployeeList() {
+        List<Employee> employees = employeeService.addEmployeeList();
+        return new AppResponse<>(employees);
     }
 
     @GetMapping("/list/db")
@@ -28,13 +29,13 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public Employee findEmployee(@PathVariable int id) {
-        return employeeService.findEmployeeById(id);
+    public AppResponse<Employee> findEmployee(@PathVariable int id) {
+        return new AppResponse<>(employeeService.findEmployeeById(id));
     }
 
     @PostMapping("report")
-    public long validateEmployees() {
-        return employeeService.validateEmployees();
+    public AppResponse<Long> validateEmployees() {
+        return new AppResponse<>(employeeService.validateEmployees());
     }
 
 }

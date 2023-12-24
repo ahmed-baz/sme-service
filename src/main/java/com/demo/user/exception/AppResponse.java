@@ -13,7 +13,7 @@ public class AppResponse<T> {
     private HttpStatus httpStatus;
     private String message;
     private String details;
-    private Object data;
+    private T data;
 
     public AppResponse() {
         this.message = "success";
@@ -21,8 +21,8 @@ public class AppResponse<T> {
         this.httpStatus = HttpStatus.OK;
     }
 
-    public AppResponse(Object data) {
-        this.data = data;
+    public AppResponse(T t) {
+        this.data = t;
         this.responseDate = new Date();
         this.httpStatus = HttpStatus.OK;
     }
