@@ -2,6 +2,7 @@ package com.demo.user.exception;
 
 import com.demo.user.model.AppException;
 import com.demo.user.repo.AppExceptionRepo;
+import com.demo.user.vo.AppResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

@@ -23,7 +23,5 @@ public class EmployeeVO {
     private BigDecimal salary;
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date joinDate;
-    private OfficialIdVO officialId;
-
 
 }

@@ -1,4 +1,4 @@
-package com.demo.user.exception;
+package com.demo.user.vo;
 
 import lombok.Getter;
 import lombok.Setter;
