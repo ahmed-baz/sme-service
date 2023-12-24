@@ -4,6 +4,7 @@ import com.demo.user.vo.AppResponse;
 import com.demo.user.model.Employee;
 import com.demo.user.service.EmployeeService;
 import com.demo.user.service.UserExecutorService;
+import com.demo.user.vo.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,9 +26,9 @@ public class EmployeeController {
     }
 
     @GetMapping("/list/db/{size}")
-    public AppResponse<List<Employee>> createEmployeeList(@PathVariable int size) {
+    public AppResponse<PageResponse<Employee>> createEmployeeList(@PathVariable int size) {
         List<Employee> employeeList = userExecutorService.createEmployeeList(size);
-        return new AppResponse<>(employeeList);
+        return new AppResponse<>(new PageResponse<>(employeeList));
     }
 
     @GetMapping("/{id}")
