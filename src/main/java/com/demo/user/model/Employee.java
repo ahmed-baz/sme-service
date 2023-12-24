@@ -26,8 +26,6 @@ public class Employee implements Serializable {
     private String lastName;
     private String email;
     private BigDecimal salary;
-    @Enumerated(EnumType.STRING)
-    private UserRole role;
 
 }
 

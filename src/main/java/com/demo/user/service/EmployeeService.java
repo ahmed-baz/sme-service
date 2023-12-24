@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -43,6 +44,12 @@ public class EmployeeService {
     public List<Employee> createEmployeeList() {
         List<Employee> employeeList = EmployeeUtil.getEmployeeList(userNo);
         return employeeRepo.saveAll(employeeList);
+    }
+
+    @Async
+    public void createEmployeeListAsync() {
+        List<Employee> employeeList = EmployeeUtil.getEmployeeList(userNo, 1000);
+        employeeRepo.saveAll(employeeList);
     }
 
     public List<Employee> addEmployeeList() {

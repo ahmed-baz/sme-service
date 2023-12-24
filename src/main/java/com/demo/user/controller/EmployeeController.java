@@ -1,5 +1,6 @@
 package com.demo.user.controller;
 
+import com.demo.user.exception.AppResponse;
 import com.demo.user.model.Employee;
 import com.demo.user.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,9 @@ public class EmployeeController {
     }
 
     @GetMapping("/list/db")
-    public List<Employee> createEmployeeList() {
-        return employeeService.createEmployeeList();
+    public AppResponse<Void> createEmployeeList() {
+        employeeService.createEmployeeListAsync();
+        return new AppResponse<>();
     }
 
     @GetMapping("/{id}")

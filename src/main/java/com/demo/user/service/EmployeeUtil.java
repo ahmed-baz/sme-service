@@ -2,6 +2,7 @@ package com.demo.user.service;
 
 
 import com.demo.user.model.Employee;
+import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
@@ -18,7 +19,13 @@ public class EmployeeUtil {
     private BigDecimal salary[] = {BigDecimal.valueOf(5000), BigDecimal.valueOf(6000), BigDecimal.valueOf(7000), BigDecimal.valueOf(8000), BigDecimal.valueOf(9000), BigDecimal.valueOf(10000), BigDecimal.valueOf(11000), BigDecimal.valueOf(12000)};
     private int max = 7;
     private int min = 0;
-    private long sleep;
+
+    @SneakyThrows
+    public Employee createRandomEmployee(long sleep) {
+        Employee employee = createRandomEmployee();
+        Thread.sleep(sleep);
+        return employee;
+    }
 
     public Employee createRandomEmployee() {
         Employee employee = new Employee();
@@ -30,11 +37,6 @@ public class EmployeeUtil {
                 .append("@").append(mail[getRandomIndex()]);
         employee.setEmail(email.toString().toLowerCase(Locale.ROOT));
         employee.setSalary(salary[getRandomIndex()]);
-        try {
-            Thread.sleep(sleep);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return employee;
     }
 
@@ -42,6 +44,14 @@ public class EmployeeUtil {
         List<Employee> employeeList = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             employeeList.add(createRandomEmployee());
+        }
+        return employeeList;
+    }
+
+    public List<Employee> getEmployeeList(int size, long sleep) {
+        List<Employee> employeeList = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            employeeList.add(createRandomEmployee(sleep));
         }
         return employeeList;
     }
