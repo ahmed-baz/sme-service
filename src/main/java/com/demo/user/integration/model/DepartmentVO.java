@@ -1,4 +1,4 @@
-package com.demo.user.vo;
+package com.demo.user.integration.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

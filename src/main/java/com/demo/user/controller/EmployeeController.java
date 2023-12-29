@@ -4,7 +4,7 @@ import com.demo.user.vo.AppResponse;
 import com.demo.user.model.Employee;
 import com.demo.user.service.EmployeeService;
 import com.demo.user.service.UserExecutorService;
-import com.demo.user.vo.EmployeeVO;
+import com.demo.user.integration.model.EmployeeVO;
 import com.demo.user.vo.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +39,7 @@ public class EmployeeController {
 
     @GetMapping("/find/{id}")
     public AppResponse<EmployeeVO> findEmployee(@PathVariable Long id) {
-        return new AppResponse<>(employeeService.findEmployeeById(id));
+        return new AppResponse<>(employeeService.findEmpById(id));
     }
 
 }

@@ -2,16 +2,15 @@ package com.demo.user.service;
 
 import com.demo.user.exception.AppErrorKeys;
 import com.demo.user.exception.AppExceptionResponse;
-import com.demo.user.feign.EmployeeServiceClient;
+import com.demo.user.integration.client.EmployeeClient;
 import com.demo.user.model.Employee;
 import com.demo.user.repo.EmployeeRepo;
 import com.demo.user.vo.AppResponse;
-import com.demo.user.vo.EmployeeVO;
+import com.demo.user.integration.model.EmployeeVO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +31,7 @@ public class EmployeeService {
     @Value("${emp.service.base.url}")
     private String empServiceBaseUrl;
     private final Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
-    private final EmployeeServiceClient employeeServiceClient;
+    private final EmployeeClient employeeClient;
 
     @Async
     public void createEmployeeListAsync(int userNo) {
@@ -49,7 +48,7 @@ public class EmployeeService {
     }
 
     public EmployeeVO findEmpById(Long id) {
-        AppResponse<EmployeeVO> response = employeeServiceClient.findEmployeeById(id);
+        AppResponse<EmployeeVO> response = employeeClient.findEmployeeById(id);
         if (HttpStatus.OK.equals(response.getStatus())) {
             return response.getData();
         }

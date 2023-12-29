@@ -1,5 +1,6 @@
-package com.demo.user.vo;
+package com.demo.user.integration.model;
 
+import com.demo.user.vo.BaseData;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
