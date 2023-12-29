@@ -1,4 +1,4 @@
-package com.demo.user.config;
+package com.demo.user.config.feign;
 
 import feign.Retryer;
 import org.springframework.beans.factory.annotation.Value;
