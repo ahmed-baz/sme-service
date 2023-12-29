@@ -23,8 +23,18 @@
                           ROLE)
             values (nextval('APP_USER_SEQUENCE'),
                     'Ahmed Ali',
-                    'ahmed.alo@stc.com',
+                    'ahmed.ali@stc.com',
                     'MAKER');
+
+            insert
+            into APP_USER(ID,
+                          NAME,
+                          EMAIL,
+                          ROLE)
+            values (nextval('APP_USER_SEQUENCE'),
+                    'Mohamed Hassan',
+                    'mohamed.hassan@stc.com',
+                    'CHECKER');
         </sql>
     </changeSet>
 

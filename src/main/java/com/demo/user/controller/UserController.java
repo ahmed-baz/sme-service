@@ -3,6 +3,7 @@ package com.demo.user.controller;
 import com.demo.user.model.User;
 import com.demo.user.permission.annotations.AdminOnly;
 import com.demo.user.service.UserService;
+import com.demo.user.vo.AppResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +20,8 @@ public class UserController {
 
     @AdminOnly
     @GetMapping("/{id}")
-    public User findUser(@PathVariable Long id) {
-        return userService.findById(id);
+    public AppResponse<User> findUser(@PathVariable Long id) {
+        return new AppResponse<>(userService.findById(id));
     }
 
 }
