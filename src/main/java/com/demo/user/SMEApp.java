@@ -8,10 +8,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @EnableFeignClients
 @EnableAsync
-public class UsersAppApplication {
+public class SMEApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(UsersAppApplication.class, args);
+        SpringApplication.run(SMEApp.class, args);
     }
 
 }

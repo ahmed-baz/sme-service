@@ -19,4 +19,18 @@ public class AdminRoleAspect {
         }
     }
 
+    @Before("@annotation(com.demo.user.permission.annotations.MakerOnly)")
+    public void validateIsMaker() {
+        if (!UserContext.isMaker()) {
+            throw new AppExceptionResponse(AppErrorKeys.USER_NOT_ALLOWED, HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @Before("@annotation(com.demo.user.permission.annotations.CheckerOnly)")
+    public void validateIsChecker() {
+        if (!UserContext.isChecker()) {
+            throw new AppExceptionResponse(AppErrorKeys.USER_NOT_ALLOWED, HttpStatus.FORBIDDEN);
+        }
+    }
+
 }

@@ -17,7 +17,13 @@ public class UserServiceImplMock implements UserService {
     public User findById(Long id) {
         Employee employee = EmployeeUtil.createRandomEmployee();
         String name = employee.getFirstName() + " " + employee.getLastName();
-        return new User(id, name, employee.getEmail(), UserRole.USER);
+        return new User(id, name, employee.getEmail(), UserRole.USER, true);
+    }
+
+    @Override
+    public User addUser(User user) {
+        user.setId(1655L);
+        return user;
     }
 
 }

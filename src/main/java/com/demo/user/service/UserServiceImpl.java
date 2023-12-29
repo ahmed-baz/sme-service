@@ -29,4 +29,11 @@ public class UserServiceImpl implements UserService {
         }
         return user.get();
     }
+
+    @Override
+    public User addUser(User user) {
+        user.setActive(false);
+        return userRepo.save(user);
+    }
+
 }

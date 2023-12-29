@@ -10,31 +10,31 @@
             into APP_USER(ID,
                           NAME,
                           EMAIL,
-                          ROLE)
+                          ROLE, ACTIVE)
             values (nextval('APP_USER_SEQUENCE'),
                     'Ahmed Baz',
                     'ahmed.baz@stc.com',
-                    'ADMIN');
+                    'ADMIN', true);
 
             insert
             into APP_USER(ID,
                           NAME,
                           EMAIL,
-                          ROLE)
+                          ROLE, ACTIVE)
             values (nextval('APP_USER_SEQUENCE'),
                     'Ahmed Ali',
-                    'ahmed.ali@stc.com',
-                    'MAKER');
+                    'ahmed.maker@stc.com',
+                    'MAKER', true);
 
             insert
             into APP_USER(ID,
                           NAME,
                           EMAIL,
-                          ROLE)
+                          ROLE, ACTIVE)
             values (nextval('APP_USER_SEQUENCE'),
                     'Mohamed Hassan',
-                    'mohamed.hassan@stc.com',
-                    'CHECKER');
+                    'mohamed.checker@stc.com',
+                    'CHECKER', true);
         </sql>
     </changeSet>
 

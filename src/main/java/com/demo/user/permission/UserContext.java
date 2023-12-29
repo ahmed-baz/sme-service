@@ -38,6 +38,14 @@ public class UserContext {
         return !isGuest() && getRole().equals(UserRole.ADMIN);
     }
 
+    public static boolean isMaker() {
+        return !isGuest() && getRole().equals(UserRole.MAKER);
+    }
+
+    public static boolean isChecker() {
+        return !isGuest() && getRole().equals(UserRole.CHECKER);
+    }
+
     public static String getEmail() {
         return userThreadLocal.get() != null ? userThreadLocal.get().getEmail() : null;
     }
