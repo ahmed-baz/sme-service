@@ -10,21 +10,24 @@ import java.util.Date;
 @Getter
 public class AppResponse<T> {
     private Date responseDate;
-    private HttpStatus httpStatus;
+    private HttpStatus status;
     private String message;
     private String details;
+    private String errorCode;
     private T data;
 
     public AppResponse() {
         this.message = "success";
         this.responseDate = new Date();
-        this.httpStatus = HttpStatus.OK;
+        this.status = HttpStatus.OK;
+        this.errorCode = "0";
     }
 
     public AppResponse(T t) {
         this.data = t;
         this.responseDate = new Date();
-        this.httpStatus = HttpStatus.OK;
+        this.status = HttpStatus.OK;
+        this.errorCode = "0";
     }
 
     public AppResponse(Date responseDate, String message, String details) {
@@ -33,9 +36,9 @@ public class AppResponse<T> {
         this.details = details;
     }
 
-    public AppResponse(Date responseDate, HttpStatus httpStatus, String message, String details) {
+    public AppResponse(Date responseDate, HttpStatus status, String message, String details) {
         this.responseDate = responseDate;
-        this.httpStatus = httpStatus;
+        this.status = status;
         this.message = message;
         this.details = details;
     }

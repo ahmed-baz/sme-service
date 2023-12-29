@@ -1,6 +1,5 @@
 package com.demo.user.model;
 
-import com.demo.user.vo.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
