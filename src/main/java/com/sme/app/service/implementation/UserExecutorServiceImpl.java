@@ -22,9 +22,10 @@ import java.util.concurrent.*;
 @Service
 public class UserExecutorServiceImpl implements UserExecutorService {
 
+    private Integer limit = 10;
     @Autowired
     private EmployeeRepo employeeRepo;
-    private final ExecutorService executorService = Executors.newFixedThreadPool(10);
+    private final ExecutorService executorService = Executors.newFixedThreadPool(limit);
     private final List<Callable<List<Employee>>> callables = new ArrayList<>();
 
     Runnable runnableTask = () -> {
@@ -64,9 +65,10 @@ public class UserExecutorServiceImpl implements UserExecutorService {
     public List<Employee> createEmployeeList(int size) {
         List<Future<List<Employee>>> futureList = new ArrayList<>();
         DummyEmployeeService dummyEmployeeService = new DummyEmployeeService();
-        int threads = size / 10;
-        dummyEmployeeService.setSize(threads);
-        for (int i = 0; i < 10; i++) {
+        int threads = size / limit;
+        limit = threads > 0 ? limit : size;
+        dummyEmployeeService.setSize(threads > 0 ? threads : size);
+        for (int i = 0; i < this.limit; i++) {
             Future<List<Employee>> future = executorService.submit(dummyEmployeeService);
             futureList.add(future);
         }
