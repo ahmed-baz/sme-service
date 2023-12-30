@@ -1,12 +1,14 @@
 package com.sme.app.mapper;
 
 
+import com.sme.app.entity.EntityBase;
+import com.sme.app.vo.BaseVo;
 import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
 
-public interface BaseMapper<E, VO> {
+public interface BaseMapper<E extends EntityBase, VO extends BaseVo> {
 
     List<VO> entityListToVoList(List<E> entityList);
 

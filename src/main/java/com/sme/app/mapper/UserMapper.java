@@ -3,8 +3,10 @@ package com.sme.app.mapper;
 
 import com.sme.app.entity.User;
 import com.sme.app.vo.UserVo;
+import org.mapstruct.Mapper;
 
 
-public interface UserMapper extends BaseMapper<UserVo, User> {
+@Mapper
+public interface UserMapper extends BaseMapper<User, UserVo> {
 
 }

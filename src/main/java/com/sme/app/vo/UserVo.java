@@ -1,15 +1,18 @@
 package com.sme.app.vo;
 
 import com.sme.app.enums.UserRole;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
 @Getter
 @Setter
-public class UserVo {
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserVo extends BaseVo {
 
-    private Long id;
     private String name;
     private String email;
     private UserRole role;

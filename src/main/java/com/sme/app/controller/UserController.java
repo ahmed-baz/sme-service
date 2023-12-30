@@ -4,6 +4,7 @@ import com.sme.app.entity.User;
 import com.sme.app.permission.annotations.AdminOnly;
 import com.sme.app.permission.annotations.MakerOnly;
 import com.sme.app.service.UserService;
+import com.sme.app.vo.UserVo;
 import com.sme.app.vo.payload.AppResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +19,13 @@ public class UserController {
 
     @AdminOnly
     @GetMapping("/{id}")
-    public AppResponse<User> findUser(@PathVariable Long id) {
+    public AppResponse<UserVo> findUser(@PathVariable Long id) {
         return new AppResponse<>(userService.findById(id));
     }
 
     @MakerOnly
     @PostMapping
-    public AppResponse<User> addUser(@RequestBody User user) {
+    public AppResponse<UserVo> addUser(@RequestBody UserVo user) {
         return new AppResponse<>(userService.addUser(user));
     }
 

@@ -1,11 +1,11 @@
 package com.sme.app.service;
 
-import com.sme.app.entity.User;
+import com.sme.app.vo.UserVo;
 
 public interface UserService {
 
-    User findById(Long id);
+    UserVo findById(Long id);
 
-    User addUser(User user);
+    UserVo addUser(UserVo user);
 
 }

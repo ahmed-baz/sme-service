@@ -1,10 +1,10 @@
 package com.sme.app.service.implementation;
 
 import com.sme.app.entity.Employee;
-import com.sme.app.entity.User;
 import com.sme.app.enums.UserRole;
-import com.sme.app.utils.EmployeeUtil;
 import com.sme.app.service.UserService;
+import com.sme.app.utils.EmployeeUtil;
+import com.sme.app.vo.UserVo;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -16,14 +16,14 @@ import org.springframework.stereotype.Service;
 @ConditionalOnProperty(value = "employee.service.mock", havingValue = "true")
 public class UserServiceImplMock implements UserService {
 
-    public User findById(Long id) {
+    public UserVo findById(Long id) {
         Employee employee = EmployeeUtil.createRandomEmployee();
         String name = employee.getFirstName() + " " + employee.getLastName();
-        return new User(id, name, employee.getEmail(), UserRole.USER, true);
+        return new UserVo(name, employee.getEmail(), UserRole.USER, true);
     }
 
     @Override
-    public User addUser(User user) {
+    public UserVo addUser(UserVo user) {
         user.setId(1655L);
         return user;
     }
