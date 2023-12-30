@@ -15,6 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Date;
+import java.util.Optional;
 
 @ControllerAdvice
 @RestController
@@ -32,10 +33,13 @@ public class CustomResponseExceptionHandler extends ResponseEntityExceptionHandl
 
     @ExceptionHandler(AppExceptionResponse.class)
     public ResponseEntity<Object> handleAppException(AppExceptionResponse ex, WebRequest request) {
-        AppException appException = appExceptionRepo.findByCode(ex.getErrorKey());
-        AppResponse appResponse = new AppResponse(new Date(), ex.getHttpStatus(), appException.getMessage(), request.getDescription(false));
-        ResponseEntity responseEntity = new ResponseEntity(appResponse, ex.getHttpStatus());
-        return responseEntity;
+        Optional<AppException> appException = appExceptionRepo.findByCode(ex.getErrorKey());
+        if (appException.isPresent()) {
+            AppResponse appResponse = new AppResponse(new Date(), ex.getHttpStatus(), appException.get().getMessage(), request.getDescription(false));
+            return new ResponseEntity(appResponse, ex.getHttpStatus());
+        }
+        AppResponse appResponse = new AppResponse(new Date(), "check with customer service", null);
+        return new ResponseEntity(appResponse, HttpStatus.BAD_REQUEST);
     }
 
     @Override
