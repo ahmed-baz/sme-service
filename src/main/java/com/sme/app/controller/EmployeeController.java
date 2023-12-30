@@ -4,6 +4,7 @@ import com.sme.app.integration.model.EmployeeVO;
 import com.sme.app.entity.Employee;
 import com.sme.app.service.EmployeeService;
 import com.sme.app.service.UserExecutorService;
+import com.sme.app.vo.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import com.sme.app.vo.payload.PageResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,8 @@ public class EmployeeController {
     private final UserExecutorService userExecutorService;
 
     @PostMapping("/list/db/{size}")
-    public AppResponse<PageResponse<Employee>> createEmployeeList(@PathVariable int size) {
-        List<Employee> employeeList = userExecutorService.createEmployeeList(size);
+    public AppResponse<PageResponse<EmployeeVo>> createEmployeeList(@PathVariable int size) {
+        List<EmployeeVo> employeeList = userExecutorService.createEmployeeList(size);
         return new AppResponse<>(new PageResponse<>(employeeList));
     }
 
@@ -33,7 +34,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public AppResponse<Employee> findEmployeeById(@PathVariable Long id) {
+    public AppResponse<EmployeeVo> findEmployeeById(@PathVariable Long id) {
         return new AppResponse<>(employeeService.findById(id));
     }
 

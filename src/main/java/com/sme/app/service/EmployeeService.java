@@ -1,13 +1,13 @@
 package com.sme.app.service;
 
 import com.sme.app.integration.model.EmployeeVO;
-import com.sme.app.entity.Employee;
+import com.sme.app.vo.EmployeeVo;
 
 public interface EmployeeService {
 
     void createEmployeeListAsync(int userNo);
 
-    Employee findById(Long id);
+    EmployeeVo findById(Long id);
 
     EmployeeVO findEmpById(Long id);
 

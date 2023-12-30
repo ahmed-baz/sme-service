@@ -1,9 +1,11 @@
 package com.sme.app.service.implementation;
 
 import com.sme.app.entity.Employee;
+import com.sme.app.mapper.EmployeeMapper;
 import com.sme.app.repo.EmployeeRepo;
 import com.sme.app.service.UserExecutorService;
 import com.sme.app.utils.EmployeeUtil;
+import com.sme.app.vo.EmployeeVo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -25,14 +27,16 @@ public class UserExecutorServiceImpl implements UserExecutorService {
     private Integer limit = 10;
     @Autowired
     private EmployeeRepo employeeRepo;
+    @Autowired
+    private EmployeeMapper employeeMapper;
     private final ExecutorService executorService = Executors.newFixedThreadPool(limit);
     private final List<Callable<List<Employee>>> callables = new ArrayList<>();
 
     Runnable runnableTask = () -> {
         long start = System.nanoTime();
         try {
-            List<Employee> employeeList = EmployeeUtil.getEmployeeList(10, 1);
-            employeeRepo.saveAll(employeeList);
+            List<EmployeeVo> employeeList = EmployeeUtil.getEmployeeList(10, 1);
+            employeeRepo.saveAll(employeeMapper.voListToEntityList(employeeList));
         } catch (Exception ex) {
             log.error(ex);
         } finally {
@@ -41,12 +45,13 @@ public class UserExecutorServiceImpl implements UserExecutorService {
         }
     };
 
-    Callable<List<Employee>> callableTask = () -> {
-        List<Employee> employeeList = new ArrayList<>();
+    Callable<List<EmployeeVo>> callableTask = () -> {
+        List<EmployeeVo> employeeList = new ArrayList<>();
         long start = System.nanoTime();
         try {
             employeeList = EmployeeUtil.getEmployeeList(10, 1);
-            employeeList = employeeRepo.saveAll(employeeList);
+            List<Employee> employees = employeeRepo.saveAll(employeeMapper.voListToEntityList(employeeList));
+            employeeList = employeeMapper.entityListToVoList(employees);
         } catch (Exception ex) {
             log.error(ex);
         } finally {
@@ -62,33 +67,33 @@ public class UserExecutorServiceImpl implements UserExecutorService {
 
     @SneakyThrows
     @Override
-    public List<Employee> createEmployeeList(int size) {
-        List<Future<List<Employee>>> futureList = new ArrayList<>();
+    public List<EmployeeVo> createEmployeeList(int size) {
+        List<Future<List<EmployeeVo>>> futureList = new ArrayList<>();
         DummyEmployeeService dummyEmployeeService = new DummyEmployeeService();
         int threads = size / limit;
         limit = threads > 0 ? limit : size;
         dummyEmployeeService.setSize(threads > 0 ? threads : size);
         for (int i = 0; i < this.limit; i++) {
-            Future<List<Employee>> future = executorService.submit(dummyEmployeeService);
+            Future<List<EmployeeVo>> future = executorService.submit(dummyEmployeeService);
             futureList.add(future);
         }
         return saveEmployeeList(futureList);
     }
 
-    private List<Employee> saveEmployeeList(List<Future<List<Employee>>> futureList) {
+    private List<EmployeeVo> saveEmployeeList(List<Future<List<EmployeeVo>>> futureList) {
         List<Employee> total = new ArrayList<>();
-        futureList.forEach(listFuture -> {
+        for (Future<List<EmployeeVo>> listFuture : futureList) {
             try {
-                List<Employee> employees = listFuture.get();
-                List<Employee> savedEmps = employeeRepo.saveAll(employees);
+                List<EmployeeVo> employees = listFuture.get();
+                List<Employee> savedEmps = employeeRepo.saveAll(employeeMapper.voListToEntityList(employees));
                 total.addAll(savedEmps);
             } catch (InterruptedException e) {
                 log.error(e);
             } catch (ExecutionException e) {
                 log.error(e);
             }
-        });
-        return total;
+        }
+        return employeeMapper.entityListToVoList(total);
     }
 
 

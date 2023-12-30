@@ -1,7 +1,7 @@
 package com.sme.app.utils;
 
 
-import com.sme.app.entity.Employee;
+import com.sme.app.vo.EmployeeVo;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
@@ -22,14 +22,14 @@ public class EmployeeUtil {
     private int min = 0;
 
     @SneakyThrows
-    public Employee createRandomEmployee(long sleep) {
-        Employee employee = createRandomEmployee();
+    public EmployeeVo createRandomEmployee(long sleep) {
+        EmployeeVo employee = createRandomEmployee();
         TimeUnit.SECONDS.sleep(sleep);
         return employee;
     }
 
-    public Employee createRandomEmployee() {
-        Employee employee = new Employee();
+    public EmployeeVo createRandomEmployee() {
+        EmployeeVo employee = new EmployeeVo();
         employee.setId(getRandomId());
         employee.setFirstName(names[getRandomIndex()]);
         employee.setLastName(names[getRandomIndex()]);
@@ -42,16 +42,16 @@ public class EmployeeUtil {
         return employee;
     }
 
-    public List<Employee> getEmployeeList(int size) {
-        List<Employee> employeeList = new ArrayList<>();
+    public List<EmployeeVo> getEmployeeList(int size) {
+        List<EmployeeVo> employeeList = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             employeeList.add(createRandomEmployee());
         }
         return employeeList;
     }
 
-    public List<Employee> getEmployeeList(int size, long sleep) {
-        List<Employee> employeeList = new ArrayList<>();
+    public List<EmployeeVo> getEmployeeList(int size, long sleep) {
+        List<EmployeeVo> employeeList = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             employeeList.add(createRandomEmployee(sleep));
         }

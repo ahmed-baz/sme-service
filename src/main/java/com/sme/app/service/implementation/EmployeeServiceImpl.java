@@ -3,14 +3,16 @@ package com.sme.app.service.implementation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.sme.app.entity.Employee;
 import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.exception.AppExceptionResponse;
 import com.sme.app.integration.client.EmployeeClient;
 import com.sme.app.integration.model.EmployeeVO;
-import com.sme.app.entity.Employee;
+import com.sme.app.mapper.EmployeeMapper;
 import com.sme.app.repo.EmployeeRepo;
 import com.sme.app.service.EmployeeService;
 import com.sme.app.utils.EmployeeUtil;
+import com.sme.app.vo.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +31,7 @@ import java.util.Optional;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepo employeeRepo;
+    private final EmployeeMapper employeeMapper;
     private final RestTemplate restTemplate;
     @Value("${emp.service.base.url}")
     private String empServiceBaseUrl;
@@ -38,16 +41,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Async
     @Override
     public void createEmployeeListAsync(int userNo) {
-        List<Employee> employeeList = EmployeeUtil.getEmployeeList(userNo, 1);
-        employeeRepo.saveAll(employeeList);
+        List<EmployeeVo> employeeList = EmployeeUtil.getEmployeeList(userNo, 1);
+        employeeRepo.saveAll(employeeMapper.voListToEntityList(employeeList));
     }
 
 
     @Override
-    public Employee findById(Long id) {
+    public EmployeeVo findById(Long id) {
         Optional<Employee> employee = employeeRepo.findById(id);
         if (employee.isPresent()) {
-            return employee.get();
+            return employeeMapper.entityToVo(employee.get());
         }
         throw new AppExceptionResponse(AppErrorKeys.EMPLOYEE_NOT_FOUND, HttpStatus.BAD_REQUEST);
     }

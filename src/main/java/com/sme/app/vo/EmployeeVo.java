@@ -8,9 +8,8 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class EmployeeVo {
+public class EmployeeVo extends BaseVo {
 
-    private Long id;
     private String firstName;
     private String lastName;
     private String email;
