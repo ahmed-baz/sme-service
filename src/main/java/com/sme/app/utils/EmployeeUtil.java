@@ -34,8 +34,9 @@ public class EmployeeUtil {
         employee.setFirstName(names[getRandomIndex()]);
         employee.setLastName(names[getRandomIndex()]);
         StringBuilder email = new StringBuilder(employee.getFirstName()).append(".")
-                .append(employee.getLastName())
-                .append("@").append(mail[getRandomIndex()]);
+                .append(employee.getLastName()).append("_")
+                .append(getRandomInt()).append("@")
+                .append(mail[getRandomIndex()]);
         employee.setEmail(email.toString().toLowerCase(Locale.ROOT));
         employee.setSalary(salary[getRandomIndex()]);
         return employee;
@@ -65,6 +66,11 @@ public class EmployeeUtil {
     private Long getRandomId() {
         Random rand = new Random();
         return rand.nextLong();
+    }
+
+    private Integer getRandomInt() {
+        Random rand = new Random();
+        return rand.nextInt(50000);
     }
 
 }
