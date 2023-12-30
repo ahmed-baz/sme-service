@@ -30,7 +30,6 @@ public abstract class SmeManagerImpl<E extends EntityBase, VO extends BaseVo, R 
         BaseRepo<E> repo = getRepo();
         doValidateEntityBeforeCreate(vo, entity);
         doPrepareEntity(vo, entity);
-        entity.setId(null);
         E savedEntity = repo.save(entity);
         doAfterCreate(vo, entity);
         return getMapper().entityToVo(savedEntity);

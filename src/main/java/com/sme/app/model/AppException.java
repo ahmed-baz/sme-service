@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.io.Serializable;
+import javax.persistence.*;
 
 
 @Getter
@@ -15,9 +13,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "APP_EXCEPTION")
-public class AppException implements Serializable {
+public class AppException extends EntityBase {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "APP_EXCEPTION_SEQUENCE")
+    @SequenceGenerator(name = "APP_EXCEPTION_SEQUENCE", sequenceName = "APP_EXCEPTION_SEQUENCE", allocationSize = 1)
     private Long id;
     private String code;
     private String message;

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 
 @Getter
@@ -15,7 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "APP_USER")
-public class User implements Serializable {
+public class User extends EntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "APP_USER_SEQUENCE")

@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="add_app_exception" author="Ahmed.Baz" labels="app_exception">
+    <changeSet id="add_app_exception" author="Ahmed.Baz" labels="sme">
         <sql>
             insert
             into APP_EXCEPTION(ID,

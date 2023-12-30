@@ -4,27 +4,27 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="create_user" author="Ahmed.Baz" labels="sme">
+    <changeSet id="create_employee" author="Ahmed.Baz" labels="sme">
         <sql>
-            CREATE TABLE APP_USER
+            CREATE TABLE EMPLOYEE
             (
                 id               int8         NOT NULL,
-                NAME             varchar(255) NOT NULL,
+                FIRST_NAME       varchar(255) NOT NULL,
+                LAST_NAME        varchar(255) NOT NULL,
                 EMAIL            varchar(255) NOT NULL,
-                ROLE             varchar(255) NOT NULL,
-                ACTIVE           boolean      NOT NULL,
+                SALARY           numeric(10)  NOT NULL,
                 CREATED_BY       int8,
                 LAST_MODIFIED_BY int8,
                 CREATED_AT       timestamp(6),
                 DELETED_AT       timestamp(6),
                 DELETED_BY       int8,
                 LAST_MODIFIED_AT timestamp(6),
-                CONSTRAINT app_user_pkey PRIMARY KEY (id),
-                CONSTRAINT app_user_email_ukey UNIQUE (EMAIL)
+                CONSTRAINT employee_pkey PRIMARY KEY (id),
+                CONSTRAINT employee_email_ukey UNIQUE (EMAIL)
             );
         </sql>
         <sql>
-            CREATE SEQUENCE APP_USER_SEQUENCE
+            CREATE SEQUENCE EMPLOYEE_SEQUENCE
                 INCREMENT 1
                 START 1;
         </sql>

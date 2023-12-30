@@ -25,11 +25,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public abstract class EntityBase implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(unique = true, nullable = false)
-    private String uuid = UUID.randomUUID().toString();
     @Column(
             nullable = false,
             updatable = false,

@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="create_app_exception" author="Ahmed.Baz" labels="app_exception">
+    <changeSet id="create_app_exception" author="Ahmed.Baz" labels="sme">
         <sql>
             CREATE TABLE APP_EXCEPTION
             (
@@ -12,6 +12,12 @@
                 CODE              varchar(255) NOT NULL,
                 MESSAGE           varchar(255) NOT NULL,
                 LOCALIZED_MESSAGE varchar(255) NOT NULL,
+                CREATED_BY        int8,
+                LAST_MODIFIED_BY  int8,
+                CREATED_AT        timestamp(6),
+                DELETED_AT        timestamp(6),
+                DELETED_BY        int8,
+                LAST_MODIFIED_AT  timestamp(6),
                 CONSTRAINT app_exception_pkey PRIMARY KEY (id),
                 CONSTRAINT app_exception_code_ukey UNIQUE (CODE)
             );

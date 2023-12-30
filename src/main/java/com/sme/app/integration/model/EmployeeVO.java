@@ -1,6 +1,5 @@
 package com.sme.app.integration.model;
 
-import com.sme.app.vo.BaseData;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
