@@ -1,6 +1,6 @@
 package com.sme.app.exception;
 
-import com.sme.app.model.AppException;
+import com.sme.app.entity.AppException;
 import com.sme.app.repo.AppExceptionRepo;
 import com.sme.app.vo.payload.AppResponse;
 import lombok.RequiredArgsConstructor;

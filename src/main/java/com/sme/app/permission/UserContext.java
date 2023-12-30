@@ -1,7 +1,7 @@
 package com.sme.app.permission;
 
 
-import com.sme.app.model.User;
+import com.sme.app.entity.User;
 import com.sme.app.enums.UserRole;
 
 public class UserContext {

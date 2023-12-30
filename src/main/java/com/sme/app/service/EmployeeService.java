@@ -1,7 +1,7 @@
 package com.sme.app.service;
 
 import com.sme.app.integration.model.EmployeeVO;
-import com.sme.app.model.Employee;
+import com.sme.app.entity.Employee;
 
 public interface EmployeeService {
 

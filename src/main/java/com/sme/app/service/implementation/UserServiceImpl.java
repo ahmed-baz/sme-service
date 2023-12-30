@@ -2,7 +2,7 @@ package com.sme.app.service.implementation;
 
 import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.exception.AppExceptionResponse;
-import com.sme.app.model.User;
+import com.sme.app.entity.User;
 import com.sme.app.repo.UserRepo;
 import com.sme.app.service.UserService;
 import lombok.Getter;

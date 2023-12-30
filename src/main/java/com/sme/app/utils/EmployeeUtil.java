@@ -1,7 +1,7 @@
 package com.sme.app.utils;
 
 
-import com.sme.app.model.Employee;
+import com.sme.app.entity.Employee;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 

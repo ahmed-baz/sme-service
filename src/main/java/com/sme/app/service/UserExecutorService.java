@@ -1,6 +1,6 @@
 package com.sme.app.service;
 
-import com.sme.app.model.Employee;
+import com.sme.app.entity.Employee;
 
 import java.util.List;
 

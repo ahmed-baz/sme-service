@@ -3,7 +3,7 @@ package com.sme.app.service.implementation;
 
 import com.sme.app.criteria.PaginationRequest;
 import com.sme.app.exception.ResourceNotFoundException;
-import com.sme.app.model.EntityBase;
+import com.sme.app.entity.EntityBase;
 import com.sme.app.repo.BaseRepo;
 import com.sme.app.service.SmeManager;
 import com.sme.app.vo.BaseVo;

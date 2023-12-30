@@ -3,7 +3,7 @@ package com.sme.app.permission;
 
 import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.exception.AppExceptionResponse;
-import com.sme.app.model.User;
+import com.sme.app.entity.User;
 import com.sme.app.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.Ordered;

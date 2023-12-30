@@ -1,4 +1,4 @@
-package com.sme.app.model;
+package com.sme.app.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

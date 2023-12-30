@@ -1,4 +1,4 @@
-package com.sme.app.model;
+package com.sme.app.entity;
 
 import com.sme.app.enums.UserRole;
 import lombok.AllArgsConstructor;

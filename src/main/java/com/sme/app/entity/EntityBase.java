@@ -1,4 +1,4 @@
-package com.sme.app.model;
+package com.sme.app.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
@@ -11,7 +11,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.UUID;
 
 @MappedSuperclass
 @JsonIgnoreProperties(

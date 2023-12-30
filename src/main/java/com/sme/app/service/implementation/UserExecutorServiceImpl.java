@@ -1,6 +1,6 @@
 package com.sme.app.service.implementation;
 
-import com.sme.app.model.Employee;
+import com.sme.app.entity.Employee;
 import com.sme.app.repo.EmployeeRepo;
 import com.sme.app.service.UserExecutorService;
 import com.sme.app.utils.EmployeeUtil;

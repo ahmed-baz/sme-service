@@ -7,7 +7,7 @@ import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.exception.AppExceptionResponse;
 import com.sme.app.integration.client.EmployeeClient;
 import com.sme.app.integration.model.EmployeeVO;
-import com.sme.app.model.Employee;
+import com.sme.app.entity.Employee;
 import com.sme.app.repo.EmployeeRepo;
 import com.sme.app.service.EmployeeService;
 import com.sme.app.utils.EmployeeUtil;

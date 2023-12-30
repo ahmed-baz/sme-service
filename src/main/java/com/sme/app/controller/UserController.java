@@ -1,6 +1,6 @@
 package com.sme.app.controller;
 
-import com.sme.app.model.User;
+import com.sme.app.entity.User;
 import com.sme.app.permission.annotations.AdminOnly;
 import com.sme.app.permission.annotations.MakerOnly;
 import com.sme.app.service.UserService;

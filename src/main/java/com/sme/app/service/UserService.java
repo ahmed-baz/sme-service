@@ -1,6 +1,6 @@
 package com.sme.app.service;
 
-import com.sme.app.model.User;
+import com.sme.app.entity.User;
 
 public interface UserService {
 

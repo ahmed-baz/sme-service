@@ -2,7 +2,7 @@ package com.sme.app.service;
 
 
 import com.sme.app.mapper.BaseMapper;
-import com.sme.app.model.EntityBase;
+import com.sme.app.entity.EntityBase;
 import com.sme.app.repo.BaseRepo;
 import com.sme.app.vo.BaseVo;
 
