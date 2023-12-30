@@ -5,7 +5,7 @@ import com.sme.app.exception.AppExceptionResponse;
 import com.sme.app.integration.client.EmployeeClient;
 import com.sme.app.model.Employee;
 import com.sme.app.repo.EmployeeRepo;
-import com.sme.app.vo.AppResponse;
+import com.sme.app.vo.payload.AppResponse;
 import com.sme.app.integration.model.EmployeeVO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

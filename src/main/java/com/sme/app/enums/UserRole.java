@@ -1,4 +1,4 @@
-package com.sme.app.vo;
+package com.sme.app.enums;
 
 public enum UserRole {
 

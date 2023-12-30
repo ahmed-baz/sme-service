@@ -2,7 +2,7 @@ package com.sme.app.exception;
 
 import com.sme.app.model.AppException;
 import com.sme.app.repo.AppExceptionRepo;
-import com.sme.app.vo.AppResponse;
+import com.sme.app.vo.payload.AppResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

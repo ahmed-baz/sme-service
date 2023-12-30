@@ -1,6 +1,6 @@
 package com.sme.app.model;
 
-import com.sme.app.vo.UserRole;
+import com.sme.app.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -4,7 +4,7 @@ import com.sme.app.model.User;
 import com.sme.app.permission.annotations.AdminOnly;
 import com.sme.app.permission.annotations.MakerOnly;
 import com.sme.app.service.UserService;
-import com.sme.app.vo.AppResponse;
+import com.sme.app.vo.payload.AppResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

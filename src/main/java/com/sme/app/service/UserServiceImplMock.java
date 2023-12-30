@@ -2,7 +2,7 @@ package com.sme.app.service;
 
 import com.sme.app.model.Employee;
 import com.sme.app.model.User;
-import com.sme.app.vo.UserRole;
+import com.sme.app.enums.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

@@ -1,7 +1,7 @@
 package com.sme.app.integration.client;
 
 
-import com.sme.app.vo.AppResponse;
+import com.sme.app.vo.payload.AppResponse;
 import com.sme.app.integration.model.EmployeeVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
