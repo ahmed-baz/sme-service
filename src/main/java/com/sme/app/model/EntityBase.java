@@ -1,0 +1,54 @@
+package com.sme.app.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.UUID;
+
+@MappedSuperclass
+@JsonIgnoreProperties(
+        value = {"createdBy", "lastModifiedBy", "deletedBy"}
+)
+@EntityListeners({AuditingEntityListener.class})
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public abstract class EntityBase implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(unique = true, nullable = false)
+    private String uuid = UUID.randomUUID().toString();
+    @Column(
+            nullable = false,
+            updatable = false,
+            name = "created_at"
+    )
+    @CreationTimestamp
+    private Timestamp createdAt;
+    @UpdateTimestamp
+    @Column(name = "last_modified_at")
+    private Timestamp lastModifiedAt;
+    @CreatedBy
+    @Column(name = "created_by")
+    private Long createdBy;
+    @LastModifiedBy
+    @Column(name = "last_modified_by")
+    private Long lastModifiedBy;
+    @Column(name = "deleted_at")
+    private Timestamp deletedAt;
+    @Column(name = "deleted_by")
+    private Long deletedBy;
+
+}
