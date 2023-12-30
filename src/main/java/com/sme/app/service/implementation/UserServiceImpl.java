@@ -10,7 +10,9 @@ import com.sme.app.vo.UserVo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ import java.util.Optional;
 @Setter
 @Getter
 @RequiredArgsConstructor
+@Log4j2
 @ConditionalOnProperty(value = "employee.service.mock", havingValue = "false", matchIfMissing = true)
 public class UserServiceImpl implements UserService {
 
@@ -36,10 +39,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVo addUser(UserVo userVo) {
-        User user = userMapper.voToEntity(userVo);
-        user.setActive(false);
-        User savedUser = userRepo.save(user);
-        return userMapper.entityToVo(savedUser);
+        try {
+            User user = userMapper.voToEntity(userVo);
+            user.setActive(false);
+            User savedUser = userRepo.save(user);
+            return userMapper.entityToVo(savedUser);
+        } catch (DataIntegrityViolationException ex) {
+            log.error(ex);
+            throw new AppExceptionResponse(AppErrorKeys.EXIST_EMAIL, HttpStatus.BAD_REQUEST);
+        } catch (Exception ex) {
+            log.error(ex);
+            throw new AppExceptionResponse();
+        }
     }
 
 }
