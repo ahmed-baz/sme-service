@@ -1,0 +1,22 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create_employee_salary_materialized_view" author="Ahmed.Baz" labels="sme">
+        <sql>
+            drop
+            materialized view if exists employee_salary;
+            create
+            materialized view if not exists employee_salary
+            as
+            select salary,
+                   sum(salary),
+                   count(salary)
+            from employee e
+            group by salary with data;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
