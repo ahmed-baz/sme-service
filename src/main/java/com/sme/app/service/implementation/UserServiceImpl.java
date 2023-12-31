@@ -16,6 +16,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,11 +31,21 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     public UserVo findById(Long id) {
+        return userMapper.entityToVo(loadUserById(id));
+    }
+
+    private User loadUserById(Long id) {
         Optional<User> user = userRepo.findById(id);
         if (!user.isPresent()) {
             throw new AppExceptionResponse(AppErrorKeys.USER_NOT_FOUND, HttpStatus.BAD_REQUEST);
         }
-        return userMapper.entityToVo(user.get());
+        return user.get();
+    }
+
+    @Override
+    public List<UserVo> findAll() {
+        List<User> all = userRepo.findAll();
+        return userMapper.entityListToVoList(all);
     }
 
     @Override
@@ -51,6 +62,29 @@ public class UserServiceImpl implements UserService {
             log.error(ex);
             throw new AppExceptionResponse();
         }
+    }
+
+    @Override
+    public UserVo updateUser(Long id, UserVo userVo) {
+        try {
+            User user = loadUserById(id);
+            userMapper.updateEntityFromVo(userVo, user);
+            user.setId(id);
+            User savedUser = userRepo.save(user);
+            return userMapper.entityToVo(savedUser);
+        } catch (DataIntegrityViolationException ex) {
+            log.error(ex);
+            throw new AppExceptionResponse(AppErrorKeys.EXIST_EMAIL, HttpStatus.BAD_REQUEST);
+        } catch (Exception ex) {
+            log.error(ex);
+            throw new AppExceptionResponse();
+        }
+    }
+
+    @Override
+    public Long deleteUser(Long id) {
+        userRepo.deleteById(id);
+        return id;
     }
 
 }

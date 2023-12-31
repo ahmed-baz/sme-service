@@ -10,6 +10,9 @@ import lombok.Setter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Setter
 @Getter
@@ -23,9 +26,33 @@ public class UserServiceImplMock implements UserService {
     }
 
     @Override
+    public List<UserVo> findAll() {
+        List<EmployeeVo> employeeList = EmployeeUtil.getEmployeeList(5);
+        List<UserVo> userVoList = employeeList.stream()
+                .map(emp -> UserVo.builder().name(emp.getFirstName() + " " + emp.getLastName())
+                        .email(emp.getEmail())
+                        .role(UserRole.CHECKER)
+                        .active(true)
+                        .build())
+                .collect(Collectors.toList());
+        return userVoList;
+    }
+
+    @Override
     public UserVo addUser(UserVo user) {
         user.setId(1655L);
         return user;
+    }
+
+    @Override
+    public UserVo updateUser(Long id, UserVo user) {
+        user.setId(1655L);
+        return user;
+    }
+
+    @Override
+    public Long deleteUser(Long id) {
+        return id;
     }
 
 }

@@ -24,6 +24,10 @@ public class UserContextInterceptor implements HandlerInterceptor, Ordered {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        String requestURI = request.getRequestURI();
+        if (!requestURI.contains("api/v1")) {
+            return true;
+        }
         String email = request.getHeader("email");
         if (email == null) throw new AppExceptionResponse(AppErrorKeys.EMAIL_IS_REQUIRED, HttpStatus.UNAUTHORIZED);
         Optional<User> user = userRepo.findByEmail(email);
