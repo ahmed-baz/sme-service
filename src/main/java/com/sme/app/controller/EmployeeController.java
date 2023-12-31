@@ -2,8 +2,10 @@ package com.sme.app.controller;
 
 import com.sme.app.integration.model.EmployeeVO;
 import com.sme.app.entity.Employee;
+import com.sme.app.permission.annotations.AdminOnly;
 import com.sme.app.service.EmployeeService;
 import com.sme.app.service.UserExecutorService;
+import com.sme.app.vo.EmployeeSalaryVo;
 import com.sme.app.vo.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import com.sme.app.vo.payload.PageResponse;
@@ -41,6 +43,19 @@ public class EmployeeController {
     @GetMapping("/find/{id}")
     public AppResponse<EmployeeVO> findEmployee(@PathVariable Long id) {
         return new AppResponse<>(employeeService.findEmpById(id));
+    }
+
+    @AdminOnly
+    @GetMapping("/salary")
+    public AppResponse<List<EmployeeSalaryVo>> getEmployeesSalariesCount() {
+        return new AppResponse<>(employeeService.getEmployeesSalariesCount());
+    }
+
+    @AdminOnly
+    @GetMapping("/refresh-view")
+    public AppResponse<Void> refreshView() {
+        employeeService.refreshView();
+        return new AppResponse<>();
     }
 
 }

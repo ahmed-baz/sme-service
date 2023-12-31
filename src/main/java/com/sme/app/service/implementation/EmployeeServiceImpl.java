@@ -9,9 +9,12 @@ import com.sme.app.exception.AppExceptionResponse;
 import com.sme.app.integration.client.EmployeeClient;
 import com.sme.app.integration.model.EmployeeVO;
 import com.sme.app.mapper.EmployeeMapper;
+import com.sme.app.mapper.EmployeeSalaryMapper;
 import com.sme.app.repo.EmployeeRepo;
+import com.sme.app.repo.EmployeeSalaryRepo;
 import com.sme.app.service.EmployeeService;
 import com.sme.app.utils.EmployeeUtil;
+import com.sme.app.vo.EmployeeSalaryVo;
 import com.sme.app.vo.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +40,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private String empServiceBaseUrl;
     private final Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
     private final EmployeeClient employeeClient;
+    private final EmployeeSalaryRepo employeeSalaryRepo;
+    private final EmployeeSalaryMapper employeeSalaryMapper;
 
     @Async
     @Override
@@ -79,6 +84,16 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new AppExceptionResponse(errorCode, HttpStatus.BAD_REQUEST);
         }
         throw new AppExceptionResponse(AppErrorKeys.EMPLOYEE_NOT_FOUND, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public List<EmployeeSalaryVo> getEmployeesSalariesCount() {
+        return employeeSalaryMapper.entityListToVoList(employeeSalaryRepo.findAll());
+    }
+
+    @Override
+    public void refreshView() {
+        employeeSalaryRepo.refreshView();
     }
 
 }

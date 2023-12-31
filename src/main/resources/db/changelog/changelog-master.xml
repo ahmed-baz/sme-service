@@ -8,6 +8,7 @@
     <include file="1.0/DML/01_addUserDetails.xml" relativeToChangelogFile="true"/>
     <include file="1.0/DDL/02_createAppException.xml" relativeToChangelogFile="true"/>
     <include file="1.0/DDL/03_createEmployee.xml" relativeToChangelogFile="true"/>
+    <include file="1.0/DDL/04_createEmpSalaryMV.xml" relativeToChangelogFile="true"/>
     <include file="1.0/DML/02_addAppException.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
