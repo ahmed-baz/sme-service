@@ -1,6 +1,6 @@
 package com.sme.app.service;
 
-import com.sme.app.vo.EmployeeVo;
+import com.sme.app.vo.employee.EmployeeVo;
 
 import java.util.List;
 

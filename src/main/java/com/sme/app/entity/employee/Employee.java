@@ -1,5 +1,6 @@
-package com.sme.app.entity;
+package com.sme.app.entity.employee;
 
+import com.sme.app.entity.EntityBase;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

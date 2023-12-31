@@ -1,7 +1,7 @@
-package com.sme.app.repo;
+package com.sme.app.repo.employee;
 
 
-import com.sme.app.entity.Employee;
+import com.sme.app.entity.employee.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

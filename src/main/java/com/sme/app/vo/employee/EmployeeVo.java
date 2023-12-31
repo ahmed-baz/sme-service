@@ -1,5 +1,6 @@
-package com.sme.app.vo;
+package com.sme.app.vo.employee;
 
+import com.sme.app.vo.BaseVo;
 import lombok.Getter;
 import lombok.Setter;
 

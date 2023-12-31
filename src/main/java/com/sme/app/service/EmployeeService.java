@@ -1,8 +1,8 @@
 package com.sme.app.service;
 
 import com.sme.app.integration.model.EmployeeVO;
-import com.sme.app.vo.EmployeeSalaryVo;
-import com.sme.app.vo.EmployeeVo;
+import com.sme.app.vo.employee.EmployeeSalaryVo;
+import com.sme.app.vo.employee.EmployeeVo;
 
 import java.util.List;
 
@@ -16,7 +16,9 @@ public interface EmployeeService {
 
     EmployeeVO findEmployeeById(Long id);
 
-    List<EmployeeSalaryVo> getEmployeesSalariesCount();
+    List<EmployeeSalaryVo> getSalariesCountMV();
+
+    List<EmployeeSalaryVo> getSalariesCount();
 
     void refreshView();
 
