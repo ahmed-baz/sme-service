@@ -1,7 +1,7 @@
 package com.sme.app.utils;
 
 
-import com.sme.app.vo.EmployeeVo;
+import com.sme.app.vo.employee.EmployeeVo;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 

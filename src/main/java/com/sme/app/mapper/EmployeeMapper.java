@@ -1,8 +1,8 @@
 package com.sme.app.mapper;
 
 
-import com.sme.app.entity.Employee;
-import com.sme.app.vo.EmployeeVo;
+import com.sme.app.entity.employee.Employee;
+import com.sme.app.vo.employee.EmployeeVo;
 import org.mapstruct.Mapper;
 
 

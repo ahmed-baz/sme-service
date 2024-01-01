@@ -1,4 +1,4 @@
-package com.sme.app.entity;
+package com.sme.app.entity.employee;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Immutable;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.math.BigDecimal;
 
 
@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "EMPLOYEE_SALARY")
+@MappedSuperclass
 @Immutable
 public class EmployeeSalary {
 

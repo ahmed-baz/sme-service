@@ -1,8 +1,7 @@
 package com.sme.app.service.implementation;
 
-import com.sme.app.entity.Employee;
 import com.sme.app.utils.EmployeeUtil;
-import com.sme.app.vo.EmployeeVo;
+import com.sme.app.vo.employee.EmployeeVo;
 import lombok.Getter;
 import lombok.Setter;
 

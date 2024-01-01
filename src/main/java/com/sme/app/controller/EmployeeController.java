@@ -1,12 +1,11 @@
 package com.sme.app.controller;
 
 import com.sme.app.integration.model.EmployeeVO;
-import com.sme.app.entity.Employee;
 import com.sme.app.permission.annotations.AdminOnly;
 import com.sme.app.service.EmployeeService;
 import com.sme.app.service.UserExecutorService;
-import com.sme.app.vo.EmployeeSalaryVo;
-import com.sme.app.vo.EmployeeVo;
+import com.sme.app.vo.employee.EmployeeSalaryVo;
+import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import com.sme.app.vo.payload.PageResponse;
 import lombok.RequiredArgsConstructor;
@@ -46,9 +45,15 @@ public class EmployeeController {
     }
 
     @AdminOnly
-    @GetMapping("/salary")
-    public AppResponse<List<EmployeeSalaryVo>> getEmployeesSalariesCount() {
-        return new AppResponse<>(employeeService.getEmployeesSalariesCount());
+    @GetMapping("/mv/salary")
+    public AppResponse<List<EmployeeSalaryVo>> getSalariesCountMV() {
+        return new AppResponse<>(employeeService.getSalariesCountMV());
+    }
+
+    @AdminOnly
+    @GetMapping("/view/salary")
+    public AppResponse<List<EmployeeSalaryVo>> getSalariesCount() {
+        return new AppResponse<>(employeeService.getSalariesCount());
     }
 
     @AdminOnly

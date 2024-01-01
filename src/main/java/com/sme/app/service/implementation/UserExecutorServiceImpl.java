@@ -1,11 +1,11 @@
 package com.sme.app.service.implementation;
 
-import com.sme.app.entity.Employee;
+import com.sme.app.entity.employee.Employee;
 import com.sme.app.mapper.EmployeeMapper;
-import com.sme.app.repo.EmployeeRepo;
+import com.sme.app.repo.employee.EmployeeRepo;
 import com.sme.app.service.UserExecutorService;
 import com.sme.app.utils.EmployeeUtil;
-import com.sme.app.vo.EmployeeVo;
+import com.sme.app.vo.employee.EmployeeVo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;

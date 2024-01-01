@@ -3,19 +3,21 @@ package com.sme.app.service.implementation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.sme.app.entity.Employee;
+import com.sme.app.entity.employee.Employee;
+import com.sme.app.entity.employee.EmployeeSalaryMV;
+import com.sme.app.entity.employee.EmployeeSalaryView;
 import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.exception.AppExceptionResponse;
 import com.sme.app.integration.client.EmployeeClient;
 import com.sme.app.integration.model.EmployeeVO;
 import com.sme.app.mapper.EmployeeMapper;
-import com.sme.app.mapper.EmployeeSalaryMapper;
-import com.sme.app.repo.EmployeeRepo;
-import com.sme.app.repo.EmployeeSalaryRepo;
+import com.sme.app.repo.employee.EmployeeRepo;
+import com.sme.app.repo.employee.EmployeeSalaryMVRepo;
+import com.sme.app.repo.employee.EmployeeSalaryViewRepo;
 import com.sme.app.service.EmployeeService;
 import com.sme.app.utils.EmployeeUtil;
-import com.sme.app.vo.EmployeeSalaryVo;
-import com.sme.app.vo.EmployeeVo;
+import com.sme.app.vo.employee.EmployeeSalaryVo;
+import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +30,7 @@ import org.springframework.web.client.RestTemplate;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,8 +43,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private String empServiceBaseUrl;
     private final Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
     private final EmployeeClient employeeClient;
-    private final EmployeeSalaryRepo employeeSalaryRepo;
-    private final EmployeeSalaryMapper employeeSalaryMapper;
+    private final EmployeeSalaryViewRepo employeeSalaryViewRepo;
+    private final EmployeeSalaryMVRepo employeeSalaryMVRepo;
 
     @Async
     @Override
@@ -87,13 +90,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeSalaryVo> getEmployeesSalariesCount() {
-        return employeeSalaryMapper.entityListToVoList(employeeSalaryRepo.findAll());
+    public List<EmployeeSalaryVo> getSalariesCountMV() {
+        List<EmployeeSalaryMV> all = employeeSalaryMVRepo.findAll();
+        List<EmployeeSalaryVo> list = all.stream().map(data -> EmployeeSalaryVo.builder().salary(data.getSalary()).count(data.getCount()).sum(data.getSum()).build()).collect(Collectors.toList());
+        return list;
+    }
+
+    @Override
+    public List<EmployeeSalaryVo> getSalariesCount() {
+        List<EmployeeSalaryView> all = employeeSalaryViewRepo.findAll();
+        List<EmployeeSalaryVo> list = all.stream().map(data -> EmployeeSalaryVo.builder().salary(data.getSalary()).count(data.getCount()).sum(data.getSum()).build()).collect(Collectors.toList());
+        return list;
     }
 
     @Override
     public void refreshView() {
-        employeeSalaryRepo.refreshView();
+        employeeSalaryMVRepo.refreshView();
     }
 
 }
