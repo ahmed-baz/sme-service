@@ -15,26 +15,6 @@
                     'Ahmed Baz',
                     'ahmed.baz@stc.com',
                     'ADMIN', true);
-
-            insert
-            into APP_USER(ID,
-                          NAME,
-                          EMAIL,
-                          ROLE, ACTIVE)
-            values (nextval('APP_USER_SEQUENCE'),
-                    'Ahmed Ali',
-                    'ahmed.maker@stc.com',
-                    'MAKER', true);
-
-            insert
-            into APP_USER(ID,
-                          NAME,
-                          EMAIL,
-                          ROLE, ACTIVE)
-            values (nextval('APP_USER_SEQUENCE'),
-                    'Mohamed Hassan',
-                    'mohamed.checker@stc.com',
-                    'CHECKER', true);
         </sql>
     </changeSet>
 

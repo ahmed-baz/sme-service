@@ -8,18 +8,18 @@
         <sql>
             CREATE TABLE APP_EXCEPTION
             (
-                id                int8         NOT NULL,
-                CODE              varchar(255) NOT NULL,
-                MESSAGE           varchar(255) NOT NULL,
-                LOCALIZED_MESSAGE varchar(255) NOT NULL,
-                CREATED_BY        int8,
-                LAST_MODIFIED_BY  int8,
-                CREATED_AT        timestamp(6),
-                DELETED_AT        timestamp(6),
-                DELETED_BY        int8,
-                LAST_MODIFIED_AT  timestamp(6),
-                CONSTRAINT app_exception_pkey PRIMARY KEY (id),
-                CONSTRAINT app_exception_code_ukey UNIQUE (CODE)
+                ID                INT8         NOT NULL,
+                CODE              VARCHAR(255) NOT NULL,
+                MESSAGE           VARCHAR(255) NOT NULL,
+                LOCALIZED_MESSAGE VARCHAR(255) NOT NULL,
+                CREATED_BY        INT8,
+                LAST_MODIFIED_BY  INT8,
+                CREATED_AT        TIMESTAMP(6),
+                DELETED_AT        TIMESTAMP(6),
+                DELETED_BY        INT8,
+                LAST_MODIFIED_AT  TIMESTAMP(6),
+                CONSTRAINT APP_EXCEPTION_PKEY PRIMARY KEY (ID),
+                CONSTRAINT APP_EXCEPTION_CODE_UKEY UNIQUE (CODE)
             );
         </sql>
         <sql>

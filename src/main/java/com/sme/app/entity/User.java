@@ -25,6 +25,9 @@ public class User extends EntityBase {
     @Enumerated(EnumType.STRING)
     private UserRole role;
     private boolean active;
+    @ManyToOne
+    @JoinColumn(name = "SME_Id")
+    private Sme sme;
 
 }
 

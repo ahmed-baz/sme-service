@@ -1,6 +1,7 @@
 package com.sme.app.entity.employee;
 
 import com.sme.app.entity.EntityBase;
+import com.sme.app.entity.Sme;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,9 @@ public class Employee extends EntityBase {
     private String lastName;
     private String email;
     private BigDecimal salary;
+    @ManyToOne
+    @JoinColumn(name = "SME_Id")
+    private Sme sme;
 
 }
 
