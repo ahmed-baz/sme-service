@@ -5,9 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Immutable;
+import jakarta.persistence.*;
 
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import java.math.BigDecimal;
 
 

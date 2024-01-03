@@ -2,12 +2,10 @@ package com.sme.app.entity.employee;
 
 import com.sme.app.entity.EntityBase;
 import com.sme.app.entity.Sme;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
-import javax.persistence.*;
+
 import java.math.BigDecimal;
 
 
@@ -16,6 +14,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "EMPLOYEE")
+@Builder
 public class Employee extends EntityBase {
 
     @Id
