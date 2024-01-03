@@ -8,4 +8,6 @@ public interface AppErrorKeys {
     String USER_NOT_ALLOWED = "USER_NOT_ALLOWED";
     String EMAIL_IS_REQUIRED = "EMAIL_IS_REQUIRED";
     String EXIST_EMAIL = "EXIST_EMAIL";
+    String NOT_FOUND = "NOT_FOUND";
+    String SME_NOT_FOUND = "SME_NOT_FOUND";
 }

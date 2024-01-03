@@ -16,6 +16,11 @@ public class AppExceptionResponse extends RuntimeException {
         this.httpStatus = HttpStatus.BAD_REQUEST;
     }
 
+    public AppExceptionResponse(String errorKey) {
+        this.errorKey = errorKey;
+        this.httpStatus = HttpStatus.BAD_REQUEST;
+    }
+
     public AppExceptionResponse(String errorKey, HttpStatus httpStatus) {
         this.errorKey = errorKey;
         this.httpStatus = httpStatus;

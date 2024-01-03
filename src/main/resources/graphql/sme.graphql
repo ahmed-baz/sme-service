@@ -1,0 +1,21 @@
+type Sme {
+    id: ID!
+    name: String!
+    code: String!
+    description: String!
+}
+
+# Root
+type Query {
+    findAllSmes: [Sme]!
+    countSmes: Long!
+    findSmeById (id: ID!): Sme!
+    findSmeByCode (code: String!): Sme!
+}
+
+# Root
+type Mutation {
+    createSme(name: String!, code: String!, description: String): Sme!
+    updateSme(id: ID!,name: String, code: String, description: String, active: Boolean): Sme!
+    deleteSme(id: ID!): Boolean
+}
