@@ -1,5 +1,6 @@
 package com.sme.app.entity.employee;
 
+import com.sme.app.entity.Address;
 import com.sme.app.entity.EntityBase;
 import com.sme.app.entity.Sme;
 import jakarta.persistence.*;
@@ -7,6 +8,7 @@ import lombok.*;
 
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @Getter
@@ -15,6 +17,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity(name = "EMPLOYEE")
 @Builder
+@NamedEntityGraph(name = "employee_entity_graph", attributeNodes = @NamedAttributeNode("address"))
 public class Employee extends EntityBase {
 
     @Id
@@ -28,6 +31,9 @@ public class Employee extends EntityBase {
     @ManyToOne
     @JoinColumn(name = "SME_Id")
     private Sme sme;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "EMPLOYEE_ID")
+    private List<Address> address;
 
 }
 

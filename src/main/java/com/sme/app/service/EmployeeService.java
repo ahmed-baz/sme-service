@@ -12,7 +12,11 @@ public interface EmployeeService {
 
     EmployeeVo findById(Long id);
 
+    EmployeeVo createEmployee(EmployeeVo employeeVo);
+
     EmployeeVO findEmpById(Long id);
+
+    boolean deleteEmployee(Long id);
 
     EmployeeVO findEmployeeById(Long id);
 

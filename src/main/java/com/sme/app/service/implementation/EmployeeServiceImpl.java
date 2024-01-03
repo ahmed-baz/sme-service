@@ -3,6 +3,7 @@ package com.sme.app.service.implementation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.sme.app.criteria.EmployeeCriteria;
 import com.sme.app.entity.employee.Employee;
 import com.sme.app.entity.employee.EmployeeSalaryMV;
 import com.sme.app.entity.employee.EmployeeSalaryView;
@@ -10,7 +11,9 @@ import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.exception.AppExceptionResponse;
 import com.sme.app.integration.client.EmployeeClient;
 import com.sme.app.integration.model.EmployeeVO;
+import com.sme.app.mapper.BaseMapper;
 import com.sme.app.mapper.EmployeeMapper;
+import com.sme.app.repo.BaseRepo;
 import com.sme.app.repo.employee.EmployeeRepo;
 import com.sme.app.repo.employee.EmployeeSalaryMVRepo;
 import com.sme.app.repo.employee.EmployeeSalaryViewRepo;
@@ -34,7 +37,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class EmployeeServiceImpl implements EmployeeService {
+public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, EmployeeCriteria> implements EmployeeService {
 
     private final EmployeeRepo employeeRepo;
     private final EmployeeMapper employeeMapper;
@@ -64,6 +67,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public EmployeeVo createEmployee(EmployeeVo employeeVo) {
+        return add(employeeVo);
+    }
+
+    @Override
     public EmployeeVO findEmpById(Long id) {
         AppResponse<EmployeeVO> response = employeeClient.findEmployeeById(id);
         if (HttpStatus.OK.equals(response.getStatus())) {
@@ -71,6 +79,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         String errorCode = response.getErrorCode();
         throw new AppExceptionResponse(errorCode, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public boolean deleteEmployee(Long id) {
+        delete(id);
+        return true;
     }
 
     @Override
@@ -106,6 +120,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void refreshView() {
         employeeSalaryMVRepo.refreshView();
+    }
+
+    @Override
+    public BaseMapper<Employee, EmployeeVo> getMapper() {
+        return employeeMapper;
+    }
+
+    @Override
+    public BaseRepo<Employee> getRepo() {
+        return employeeRepo;
     }
 
 }

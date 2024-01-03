@@ -28,6 +28,11 @@ public class EmployeeController {
         return new AppResponse<>(new PageResponse<>(employeeList));
     }
 
+    @PostMapping
+    public AppResponse<EmployeeVo> createEmployee(@RequestBody EmployeeVo employeeVo) {
+        return new AppResponse<>(employeeService.createEmployee(employeeVo));
+    }
+
     @PostMapping("/list/async/{size}")
     public AppResponse<Void> createEmployeeListAsync(@PathVariable int size) {
         employeeService.createEmployeeListAsync(size);
@@ -42,6 +47,11 @@ public class EmployeeController {
     @GetMapping("/find/{id}")
     public AppResponse<EmployeeVO> findEmployee(@PathVariable Long id) {
         return new AppResponse<>(employeeService.findEmpById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public AppResponse<Boolean> deleteEmployee(@PathVariable Long id) {
+        return new AppResponse<>(employeeService.deleteEmployee(id));
     }
 
     @AdminOnly
