@@ -12,6 +12,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class AdminRoleAspect {
 
+    @Before("@annotation(com.sme.app.permission.annotations.SuperAdminOnly)")
+    public void validateIsisSuperAdmin() {
+        if (!UserContext.isSuperAdmin()) {
+            throw new AppExceptionResponse(AppErrorKeys.USER_NOT_ALLOWED, HttpStatus.FORBIDDEN);
+        }
+    }
+
     @Before("@annotation(com.sme.app.permission.annotations.AdminOnly)")
     public void validateIsAdmin() {
         if (!UserContext.isAdmin()) {

@@ -12,7 +12,7 @@
                 NAME             VARCHAR(255) NOT NULL,
                 EMAIL            VARCHAR(255) NOT NULL,
                 ROLE             VARCHAR(255) NOT NULL,
-                ACTIVE           BOOLEAN      NOT NULL,
+                ACTIVE           BOOLEAN      NOT NULL DEFAULT TRUE,
                 SME_ID           INT8,
                 CREATED_BY       INT8,
                 LAST_MODIFIED_BY INT8,

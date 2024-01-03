@@ -12,7 +12,7 @@ public interface SmeManager<E extends EntityBase, VO extends BaseVo> {
 
     VO add(VO vo);
 
-    VO update(VO vo, Long id);
+    VO update(Long id, VO vo);
 
     void delete(Long id);
 

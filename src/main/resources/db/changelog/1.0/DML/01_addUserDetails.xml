@@ -14,7 +14,7 @@
             values (nextval('APP_USER_SEQUENCE'),
                     'Ahmed Baz',
                     'ahmed.baz@stc.com',
-                    'ADMIN', true);
+                    'SUPER_ADMIN', true);
         </sql>
     </changeSet>
 

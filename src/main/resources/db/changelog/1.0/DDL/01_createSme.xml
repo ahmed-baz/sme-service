@@ -10,7 +10,9 @@
             (
                 ID               INT8         NOT NULL,
                 NAME             VARCHAR(255) NOT NULL,
-                CODE             VARCHAR(255) NOT NULL,
+                CODE             VARCHAR(100) NOT NULL,
+                DESCRIPTION      VARCHAR(255) NOT NULL,
+                ACTIVE           BOOLEAN      NOT NULL DEFAULT TRUE,
                 CREATED_BY       INT8,
                 LAST_MODIFIED_BY INT8,
                 CREATED_AT       TIMESTAMP(6),

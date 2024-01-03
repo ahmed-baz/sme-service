@@ -34,6 +34,10 @@ public class UserContext {
         return userThreadLocal.get().getRole();
     }
 
+    public static boolean isSuperAdmin() {
+        return !isGuest() && getRole().equals(UserRole.SUPER_ADMIN);
+    }
+
     public static boolean isAdmin() {
         return !isGuest() && getRole().equals(UserRole.ADMIN);
     }
