@@ -6,10 +6,9 @@ import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @UtilityClass
@@ -39,6 +38,7 @@ public class EmployeeUtil {
                 .append(mail[getRandomIndex()]);
         employee.setEmail(email.toString().toLowerCase(Locale.ROOT));
         employee.setSalary(salary[getRandomIndex()]);
+        employee.setJoinDate(getRandomDate());
         return employee;
     }
 
@@ -71,6 +71,15 @@ public class EmployeeUtil {
     private Integer getRandomInt() {
         Random rand = new Random();
         return rand.nextInt(50000);
+    }
+
+    private Date getRandomDate() {
+        Random random = new Random();
+        int minDay = (int) LocalDate.of(2015, 1, 1).toEpochDay();
+        int maxDay = (int) LocalDate.of(2023, 1, 1).toEpochDay();
+        long randomDay = random.nextInt(maxDay - minDay) + minDay;
+        LocalDate localDate = LocalDate.ofEpochDay(randomDay);
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
 }

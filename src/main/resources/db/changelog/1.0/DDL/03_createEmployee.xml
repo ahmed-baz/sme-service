@@ -14,6 +14,7 @@
                 EMAIL            VARCHAR(255) NOT NULL,
                 SME_ID           INT8,
                 SALARY           NUMERIC(10)  NOT NULL,
+                JOIN_DATE        TIMESTAMP(6),
                 CREATED_BY       INT8,
                 LAST_MODIFIED_BY INT8,
                 CREATED_AT       TIMESTAMP(6),

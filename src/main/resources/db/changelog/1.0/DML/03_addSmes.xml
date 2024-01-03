@@ -1,0 +1,31 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="add_smes" author="Ahmed.Baz" labels="sme">
+        <sql>
+            INSERT INTO SME
+                (ID, NAME, CODE, ACTIVE, CREATED_AT)
+            VALUES (NEXTVAL('SME_SEQUENCE'), 'Skyros', 'SKYROS', TRUE, CURRENT_DATE);
+
+            INSERT INTO SME
+                (ID, NAME, CODE, ACTIVE, CREATED_AT)
+            VALUES (NEXTVAL('SME_SEQUENCE'), 'Bitnami', 'BITNAMI', TRUE, CURRENT_DATE);
+
+            INSERT INTO SME
+                (ID, NAME, CODE, ACTIVE, CREATED_AT)
+            VALUES (NEXTVAL('SME_SEQUENCE'), 'Smart', 'SMART', TRUE, CURRENT_DATE);
+
+            INSERT INTO SME
+                (ID, NAME, CODE, ACTIVE, CREATED_AT)
+            VALUES (NEXTVAL('SME_SEQUENCE'), 'Puzzle', 'PUZZLE', TRUE, CURRENT_DATE);
+
+            INSERT INTO SME
+                (ID, NAME, CODE, ACTIVE, CREATED_AT)
+            VALUES (NEXTVAL('SME_SEQUENCE'), 'Boutique', 'BOUTIQUE', TRUE, CURRENT_DATE);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

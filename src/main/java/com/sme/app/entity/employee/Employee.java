@@ -1,5 +1,6 @@
 package com.sme.app.entity.employee;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sme.app.entity.Address;
 import com.sme.app.entity.EntityBase;
 import com.sme.app.entity.Sme;
@@ -8,6 +9,7 @@ import lombok.*;
 
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 
@@ -34,6 +36,10 @@ public class Employee extends EntityBase {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "EMPLOYEE_ID")
     private List<Address> address;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "JOIN_DATE")
+    private Date joinDate;
 
 }
 

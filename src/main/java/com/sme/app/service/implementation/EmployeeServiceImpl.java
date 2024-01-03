@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.sme.app.criteria.EmployeeCriteria;
+import com.sme.app.entity.Sme;
 import com.sme.app.entity.employee.Employee;
 import com.sme.app.entity.employee.EmployeeSalaryMV;
 import com.sme.app.entity.employee.EmployeeSalaryView;
@@ -13,16 +14,20 @@ import com.sme.app.integration.client.EmployeeClient;
 import com.sme.app.integration.model.EmployeeVO;
 import com.sme.app.mapper.BaseMapper;
 import com.sme.app.mapper.EmployeeMapper;
+import com.sme.app.mapper.SmeMapper;
 import com.sme.app.repo.BaseRepo;
+import com.sme.app.repo.SmeRepo;
 import com.sme.app.repo.employee.EmployeeRepo;
 import com.sme.app.repo.employee.EmployeeSalaryMVRepo;
 import com.sme.app.repo.employee.EmployeeSalaryViewRepo;
 import com.sme.app.service.EmployeeService;
 import com.sme.app.utils.EmployeeUtil;
+import com.sme.app.vo.SmeVo;
 import com.sme.app.vo.employee.EmployeeSalaryVo;
 import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +38,7 @@ import org.springframework.web.client.RestTemplate;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,14 +54,26 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
     private final EmployeeClient employeeClient;
     private final EmployeeSalaryViewRepo employeeSalaryViewRepo;
     private final EmployeeSalaryMVRepo employeeSalaryMVRepo;
+    @Autowired
+    private SmeRepo smeRepo;
+    @Autowired
+    private SmeMapper smeMapper;
 
     @Async
     @Override
     public void createEmployeeListAsync(int userNo) {
+        List<Sme> smes = smeRepo.findAll();
         List<EmployeeVo> employeeList = EmployeeUtil.getEmployeeList(userNo, 1);
-        employeeRepo.saveAll(employeeMapper.voListToEntityList(employeeList));
+        List<Employee> employees = employeeMapper.voListToEntityList(employeeList);
+        employees.forEach(employee -> employee.setSme(anySme(smes)));
+        employeeRepo.saveAll(employees);
     }
 
+    public Sme anySme(List<Sme> smes) {
+        Random random = new Random();
+        int index = random.nextInt(smes.size());
+        return smes.get(index);
+    }
 
     @Override
     public EmployeeVo findById(Long id) {
