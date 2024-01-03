@@ -4,9 +4,13 @@ package com.sme.app.mapper;
 import com.sme.app.entity.employee.Employee;
 import com.sme.app.vo.employee.EmployeeVo;
 import org.mapstruct.Mapper;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.ReportingPolicy;
 
 
-@Mapper
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        componentModel = "spring",
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface EmployeeMapper extends BaseMapper<Employee, EmployeeVo> {
 
 }
