@@ -1,7 +1,7 @@
 package com.sme.app.config;
 
 
-import com.sme.app.permission.UserContextInterceptor;
+import com.sme.app.interceptor.UserContextInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
