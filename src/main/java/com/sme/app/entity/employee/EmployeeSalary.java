@@ -1,11 +1,12 @@
 package com.sme.app.entity.employee;
 
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Immutable;
-import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
@@ -19,9 +20,9 @@ import java.math.BigDecimal;
 public class EmployeeSalary {
 
     @Id
-    private BigDecimal salary;
+    private String code;
+    private int count;
     private BigDecimal sum;
-    private BigDecimal count;
 
 }
 

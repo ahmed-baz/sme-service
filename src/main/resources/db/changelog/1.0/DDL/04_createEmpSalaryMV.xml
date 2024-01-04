@@ -7,15 +7,16 @@
     <changeSet id="create_employee_salary_materialized_view" author="Ahmed.Baz" labels="sme">
         <sql>
             drop
-            materialized view if exists employee_salary_mv;
+            materialized view if exists sme_employees_salary_mv;
             create
-            materialized view if not exists employee_salary_mv
+            materialized view if not exists sme_employees_salary_mv
             as
-            select salary,
-                   sum(salary),
-                   count(salary)
-            from employee e
-            group by salary with data;
+            select sme.code,
+                   count(emp),
+                   sum(salary)
+            from employee emp inner join sme sme
+                on emp.sme_id = sme.id
+            group by sme.code with data;
         </sql>
     </changeSet>
 

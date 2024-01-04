@@ -8,14 +8,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
-
 @Repository
-public interface EmployeeSalaryMVRepo extends JpaRepository<EmployeeSalaryMV, BigDecimal> {
+public interface EmployeeSalaryMVRepo extends JpaRepository<EmployeeSalaryMV, String> {
 
-    //@Transactional
+    @Transactional
     @Modifying
-    @Query(value = "REFRESH MATERIALIZED VIEW EMPLOYEE_SALARY_MV", nativeQuery = true)
+    @Query(value = "REFRESH MATERIALIZED VIEW SME_EMPLOYEES_SALARY_MV", nativeQuery = true)
     void refreshView();
 
 }

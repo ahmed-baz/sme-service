@@ -2,6 +2,7 @@ package com.sme.app.controller;
 
 import com.sme.app.integration.model.EmployeeVO;
 import com.sme.app.permission.annotations.AdminOnly;
+import com.sme.app.permission.annotations.SuperAdminOnly;
 import com.sme.app.service.EmployeeService;
 import com.sme.app.service.UserExecutorService;
 import com.sme.app.vo.employee.EmployeeSalaryVo;
@@ -54,19 +55,19 @@ public class EmployeeController {
         return new AppResponse<>(employeeService.deleteEmployee(id));
     }
 
-    @AdminOnly
+    @SuperAdminOnly
     @GetMapping("/mv/salary")
     public AppResponse<List<EmployeeSalaryVo>> getSalariesCountMV() {
         return new AppResponse<>(employeeService.getSalariesCountMV());
     }
 
-    @AdminOnly
+    @SuperAdminOnly
     @GetMapping("/view/salary")
     public AppResponse<List<EmployeeSalaryVo>> getSalariesCount() {
         return new AppResponse<>(employeeService.getSalariesCount());
     }
 
-    @AdminOnly
+    @SuperAdminOnly
     @GetMapping("/refresh-view")
     public AppResponse<Void> refreshView() {
         employeeService.refreshView();
