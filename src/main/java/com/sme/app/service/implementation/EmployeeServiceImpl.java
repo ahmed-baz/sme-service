@@ -8,6 +8,7 @@ import com.sme.app.entity.Sme;
 import com.sme.app.entity.employee.Employee;
 import com.sme.app.entity.employee.EmployeeSalaryMV;
 import com.sme.app.entity.employee.EmployeeSalaryView;
+import com.sme.app.entity.employee.EmployeeView;
 import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.exception.AppExceptionResponse;
 import com.sme.app.integration.client.EmployeeClient;
@@ -56,8 +57,6 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
     private final EmployeeSalaryMVRepo employeeSalaryMVRepo;
     @Autowired
     private SmeRepo smeRepo;
-    @Autowired
-    private SmeMapper smeMapper;
 
     @Async
     @Override
@@ -80,6 +79,15 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
         Optional<Employee> employee = employeeRepo.findById(id);
         if (employee.isPresent()) {
             return employeeMapper.entityToVo(employee.get());
+        }
+        throw new AppExceptionResponse(AppErrorKeys.EMPLOYEE_NOT_FOUND, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public EmployeeVo findByEmail(String email) {
+        Optional<EmployeeView> employee = employeeRepo.findEmployeeByEmail(email);
+        if (employee.isPresent()) {
+            return employeeMapper.fromEmployeeViewToEmployeeVO(employee.get());
         }
         throw new AppExceptionResponse(AppErrorKeys.EMPLOYEE_NOT_FOUND, HttpStatus.BAD_REQUEST);
     }

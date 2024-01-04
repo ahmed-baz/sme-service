@@ -45,6 +45,11 @@ public class EmployeeController {
         return new AppResponse<>(employeeService.findById(id));
     }
 
+    @GetMapping("/email/{email}")
+    public AppResponse<EmployeeVo> findEmployeeByEmail(@PathVariable String email) {
+        return new AppResponse<>(employeeService.findByEmail(email));
+    }
+
     @GetMapping("/find/{id}")
     public AppResponse<EmployeeVO> findEmployee(@PathVariable Long id) {
         return new AppResponse<>(employeeService.findEmpById(id));

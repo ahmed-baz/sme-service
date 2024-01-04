@@ -15,6 +15,7 @@ import java.util.List;
 @Setter
 public class EmployeeVo extends BaseVo {
 
+    private String fullName;
     private String firstName;
     private String lastName;
     private String email;
@@ -22,6 +23,7 @@ public class EmployeeVo extends BaseVo {
     private List<AddressVo> address;
     private Date joinDate;
     private SmeVo sme;
+    private String smeCode;
 
 }
 

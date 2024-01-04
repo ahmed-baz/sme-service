@@ -2,6 +2,7 @@ package com.sme.app.repo.employee;
 
 
 import com.sme.app.entity.employee.Employee;
+import com.sme.app.entity.employee.EmployeeView;
 import com.sme.app.repo.BaseRepo;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Repository;
@@ -12,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepo extends BaseRepo<Employee> {
 
-    Optional<Employee> findEmployeeByEmail(String email);
+    Optional<EmployeeView> findEmployeeByEmail(String email);
 
     @Override
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "employee_entity_graph")
