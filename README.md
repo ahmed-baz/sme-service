@@ -6,21 +6,22 @@
 - [ ] Spring web
 - [ ] Spring validation
 - [ ] Spring actuator
+- [ ] JPA Projection
 - [ ] Maven
 - [ ] openfeign, and FeignCustomRetryer
 - [ ] RestTemplate
 - [ ] Interceptor
 - [ ] ThreadLocal
-- [ ] Aspect
+- [ ] AOP
 - [ ] handle app exceptions with ControllerAdvice
 - [ ] ExecutorService
 - [ ] Async
-- [ ] ConditionalOnProperty to enable mocking service
 - [ ] postgresql DB
 - [ ] view
 - [ ] materialized view
 - [ ] liquibase
 - [ ] lombok
 - [ ] mapstruct
+- [ ] Graphql
 - [ ] Docker
 - [ ] Docker Compose
