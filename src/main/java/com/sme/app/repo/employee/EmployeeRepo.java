@@ -19,4 +19,6 @@ public interface EmployeeRepo extends BaseRepo<Employee> {
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "employee_entity_graph")
     List<Employee> findAll();
 
+    List<Employee> findBySmeIsNull();
+
 }
