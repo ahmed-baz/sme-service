@@ -13,6 +13,8 @@
 - [ ] Interceptor
 - [ ] ThreadLocal
 - [ ] AOP
+- [ ] Scheduler
+- [ ] Redis Caching
 - [ ] handle app exceptions with ControllerAdvice
 - [ ] ExecutorService
 - [ ] Async
