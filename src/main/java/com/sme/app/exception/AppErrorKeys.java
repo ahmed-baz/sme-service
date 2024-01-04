@@ -10,4 +10,5 @@ public interface AppErrorKeys {
     String EXIST_EMAIL = "EXIST_EMAIL";
     String NOT_FOUND = "NOT_FOUND";
     String SME_NOT_FOUND = "SME_NOT_FOUND";
+    String INTEGRATION_ISSUE = "INTEGRATION_ISSUE";
 }

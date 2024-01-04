@@ -27,6 +27,7 @@ import com.sme.app.vo.employee.EmployeeSalaryVo;
 import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -42,6 +43,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, EmployeeCriteria> implements EmployeeService {
 
     private final EmployeeRepo employeeRepo;
@@ -91,12 +93,17 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
 
     @Override
     public EmployeeVO findEmpById(Long id) {
-        AppResponse<EmployeeVO> response = employeeClient.findEmployeeById(id);
-        if (HttpStatus.OK.equals(response.getStatus())) {
-            return response.getData();
+        try {
+            AppResponse<EmployeeVO> response = employeeClient.findEmployeeById(id);
+            if (HttpStatus.OK.equals(response.getStatus())) {
+                return response.getData();
+            }
+            String errorCode = response.getErrorCode();
+            throw new AppExceptionResponse(errorCode, HttpStatus.BAD_REQUEST);
+        } catch (Exception ex) {
+            log.error(ex);
         }
-        String errorCode = response.getErrorCode();
-        throw new AppExceptionResponse(errorCode, HttpStatus.BAD_REQUEST);
+        throw new AppExceptionResponse(AppErrorKeys.INTEGRATION_ISSUE);
     }
 
     @Override

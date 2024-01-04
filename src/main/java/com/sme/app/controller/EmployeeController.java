@@ -52,7 +52,7 @@ public class EmployeeController {
 
     @GetMapping("/find/{id}")
     public AppResponse<EmployeeVO> findEmployee(@PathVariable Long id) {
-        return new AppResponse<>(employeeService.findEmpById(id));
+        return new AppResponse<>(employeeService.findEmployeeById(id));
     }
 
     @DeleteMapping("/{id}")
