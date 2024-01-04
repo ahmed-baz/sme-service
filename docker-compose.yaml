@@ -11,18 +11,35 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    networks:
+      - sme-network
 
-  core-app:
+  redis:
+    image: redis:alpine3.17
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - sme-network
+
+  sme-service:
     build: .
     image: ahmedbaz/sme-app:1.0
     ports:
       - "9999:9999"
     depends_on:
+      - redis
       - postgres
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/sme_app
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: root
+      SPRING.DATA.REDIS.HOST: redis
+      SPRING.DATA.REDIS.PORT: 6379
+    networks:
+      - sme-network
 
 volumes:
   postgres-data:
+networks:
+  sme-network:
