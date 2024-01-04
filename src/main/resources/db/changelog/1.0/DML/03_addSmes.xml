@@ -8,23 +8,23 @@
         <sql>
             INSERT INTO SME
                 (ID, NAME, CODE, ACTIVE, CREATED_AT)
-            VALUES (NEXTVAL('SME_SEQUENCE'), 'Skyros', 'SKYROS', TRUE, CURRENT_DATE);
+            VALUES (NEXTVAL('SME_SEQUENCE'), 'Jerusalem', 'JERUSALEM', TRUE, CURRENT_DATE);
 
             INSERT INTO SME
                 (ID, NAME, CODE, ACTIVE, CREATED_AT)
-            VALUES (NEXTVAL('SME_SEQUENCE'), 'Bitnami', 'BITNAMI', TRUE, CURRENT_DATE);
+            VALUES (NEXTVAL('SME_SEQUENCE'), 'Gaza', 'GAZA', TRUE, CURRENT_DATE);
 
             INSERT INTO SME
                 (ID, NAME, CODE, ACTIVE, CREATED_AT)
-            VALUES (NEXTVAL('SME_SEQUENCE'), 'Smart', 'SMART', TRUE, CURRENT_DATE);
+            VALUES (NEXTVAL('SME_SEQUENCE'), 'Rafah', 'RAFAH', TRUE, CURRENT_DATE);
 
             INSERT INTO SME
                 (ID, NAME, CODE, ACTIVE, CREATED_AT)
-            VALUES (NEXTVAL('SME_SEQUENCE'), 'Puzzle', 'PUZZLE', TRUE, CURRENT_DATE);
+            VALUES (NEXTVAL('SME_SEQUENCE'), 'Ramallah', 'RAMALLAH', TRUE, CURRENT_DATE);
 
             INSERT INTO SME
                 (ID, NAME, CODE, ACTIVE, CREATED_AT)
-            VALUES (NEXTVAL('SME_SEQUENCE'), 'Boutique', 'BOUTIQUE', TRUE, CURRENT_DATE);
+            VALUES (NEXTVAL('SME_SEQUENCE'), 'Jenin', 'JENIN', TRUE, CURRENT_DATE);
         </sql>
     </changeSet>
 
