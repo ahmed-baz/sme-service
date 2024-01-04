@@ -5,6 +5,9 @@ import com.sme.app.entity.Sme;
 import com.sme.app.entity.employee.Employee;
 import com.sme.app.repo.SmeRepo;
 import com.sme.app.repo.employee.EmployeeRepo;
+import com.sme.app.service.SmeService;
+import com.sme.app.utils.SmeUtil;
+import com.sme.app.vo.SmeVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,7 +21,7 @@ import java.util.Random;
 public class EmployeeScheduleService {
 
     private final EmployeeRepo employeeRepo;
-    private final SmeRepo smeRepo;
+    private final SmeService smeService;
     @Value("${jobs.update.employee.enable}")
     private boolean updateEmployeeJob;
 
@@ -27,19 +30,13 @@ public class EmployeeScheduleService {
         if (updateEmployeeJob) {
             List<Employee> employees = employeeRepo.findBySmeIsNull();
             if (!employees.isEmpty()) {
-                List<Sme> smes = smeRepo.findAll();
+                List<SmeVo> smes = smeService.findAllSmes();
                 employees.forEach(employee -> {
-                    employee.setSme(anySme(smes));
+                    employee.setSme(SmeUtil.anySme(smes));
                     employeeRepo.save(employee);
                 });
             }
         }
-    }
-
-    private Sme anySme(List<Sme> smes) {
-        Random random = new Random();
-        int index = random.nextInt(smes.size());
-        return smes.get(index);
     }
 
 }

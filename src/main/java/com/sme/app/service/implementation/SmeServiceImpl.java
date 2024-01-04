@@ -9,6 +9,7 @@ import com.sme.app.repo.SmeRepo;
 import com.sme.app.service.SmeService;
 import com.sme.app.vo.SmeVo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +37,9 @@ public class SmeServiceImpl extends SmeManagerImpl<Sme, SmeVo, SmeCriteria> impl
         return null;
     }
 
+
     @Override
+    @Cacheable(value = "findSmeList")
     public List<SmeVo> findAllSmes() {
         List<Sme> all = smeRepo.findAllByActive(true);
         return smeMapper.entityListToVoList(all);
