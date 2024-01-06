@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,6 +21,9 @@ public class Sme extends EntityBase {
     private String description;
     private Boolean active;
 
+    public Sme(Long id) {
+        this.id = id;
+    }
 }
 
 

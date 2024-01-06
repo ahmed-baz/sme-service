@@ -1,11 +1,14 @@
 package com.sme.app.service.implementation;
 
+import com.sme.app.entity.Sme;
 import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.exception.AppExceptionResponse;
 import com.sme.app.entity.User;
 import com.sme.app.mapper.UserMapper;
 import com.sme.app.repo.UserRepo;
+import com.sme.app.service.SmeService;
 import com.sme.app.service.UserService;
+import com.sme.app.vo.SmeVo;
 import com.sme.app.vo.UserVo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
+    private final SmeService smeService;
     private final UserMapper userMapper;
 
     public UserVo findById(Long id) {
@@ -49,12 +53,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVo addUser(UserVo userVo) {
+    public UserVo addUser(String smeCode, UserVo userVo) {
         try {
             User user = userMapper.voToEntity(userVo);
-            user.setActive(false);
-            User savedUser = userRepo.save(user);
-            return userMapper.entityToVo(savedUser);
+            user.setActive(true);
+            List<SmeVo> smes = smeService.findAllSmes();
+            Optional<SmeVo> smeVo = smes.stream().filter(sme -> smeCode.equals(sme.getCode())).findFirst();
+            if (smeVo.isPresent()) {
+                user.setSme(new Sme(smeVo.get().getId()));
+                User savedUser = userRepo.save(user);
+                return userMapper.entityToVo(savedUser);
+            } else {
+                throw new AppExceptionResponse(AppErrorKeys.INVALID_SME, HttpStatus.BAD_REQUEST);
+            }
         } catch (DataIntegrityViolationException ex) {
             log.error(ex);
             throw new AppExceptionResponse(AppErrorKeys.EXIST_EMAIL, HttpStatus.BAD_REQUEST);

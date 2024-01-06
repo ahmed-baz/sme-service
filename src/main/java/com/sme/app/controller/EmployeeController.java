@@ -1,7 +1,7 @@
 package com.sme.app.controller;
 
 import com.sme.app.integration.model.EmployeeVO;
-import com.sme.app.permission.annotations.AdminOnly;
+import com.sme.app.permission.annotations.MakerOnly;
 import com.sme.app.permission.annotations.SuperAdminOnly;
 import com.sme.app.service.EmployeeService;
 import com.sme.app.service.UserExecutorService;
@@ -29,9 +29,10 @@ public class EmployeeController {
         return new AppResponse<>(new PageResponse<>(employeeList));
     }
 
-    @PostMapping
-    public AppResponse<EmployeeVo> createEmployee(@RequestBody EmployeeVo employeeVo) {
-        return new AppResponse<>(employeeService.createEmployee(employeeVo));
+    @MakerOnly
+    @PostMapping("/{smeCode}")
+    public AppResponse<EmployeeVo> createEmployee(@PathVariable String smeCode, @RequestBody EmployeeVo employeeVo) {
+        return new AppResponse<>(employeeService.createEmployee(smeCode, employeeVo));
     }
 
     @PostMapping("/list/async/{size}")

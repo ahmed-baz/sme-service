@@ -14,7 +14,7 @@ public interface EmployeeService {
 
     EmployeeVo findByEmail(String email);
 
-    EmployeeVo createEmployee(EmployeeVo employeeVo);
+    EmployeeVo createEmployee(String smeCode, EmployeeVo employeeVo);
 
     EmployeeVO findEmpById(Long id);
 

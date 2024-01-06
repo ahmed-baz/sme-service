@@ -1,7 +1,7 @@
 package com.sme.app.controller;
 
 import com.sme.app.permission.annotations.AdminOnly;
-import com.sme.app.permission.annotations.MakerOnly;
+import com.sme.app.permission.annotations.SuperAdminOnly;
 import com.sme.app.service.UserService;
 import com.sme.app.vo.UserVo;
 import com.sme.app.vo.payload.AppResponse;
@@ -30,10 +30,16 @@ public class UserController {
         return new AppResponse<>(userService.findAll());
     }
 
-    @MakerOnly
-    @PostMapping
-    public AppResponse<UserVo> addUser(@RequestBody UserVo user) {
-        return new AppResponse<>(userService.addUser(user));
+    @SuperAdminOnly
+    @PostMapping("/admin/{smeCode}")
+    public AppResponse<UserVo> createAdmin(@PathVariable String smeCode, @RequestBody UserVo user) {
+        return new AppResponse<>(userService.addUser(smeCode, user));
+    }
+
+    @AdminOnly
+    @PostMapping("/{smeCode}")
+    public AppResponse<UserVo> createUser(@PathVariable String smeCode, @RequestBody UserVo user) {
+        return new AppResponse<>(userService.addUser(smeCode, user));
     }
 
     @AdminOnly

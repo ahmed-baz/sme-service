@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.sme.app.criteria.EmployeeCriteria;
+import com.sme.app.entity.Sme;
+import com.sme.app.entity.User;
 import com.sme.app.entity.employee.Employee;
 import com.sme.app.entity.employee.EmployeeSalaryMV;
 import com.sme.app.entity.employee.EmployeeSalaryView;
@@ -40,10 +42,11 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
-@RequiredArgsConstructor
 @Log4j2
+@RequiredArgsConstructor
 public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, EmployeeCriteria> implements EmployeeService {
 
     private final EmployeeRepo employeeRepo;
@@ -55,8 +58,7 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
     private final EmployeeClient employeeClient;
     private final EmployeeSalaryViewRepo employeeSalaryViewRepo;
     private final EmployeeSalaryMVRepo employeeSalaryMVRepo;
-    @Autowired
-    private SmeService smeService;
+    private final SmeService smeService;
 
     @Async
     @Override
@@ -87,7 +89,14 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
     }
 
     @Override
-    public EmployeeVo createEmployee(EmployeeVo employeeVo) {
+    public EmployeeVo createEmployee(String smeCode, EmployeeVo employeeVo) {
+        List<SmeVo> smes = smeService.findAllSmes();
+        Optional<SmeVo> smeVo = smes.stream().filter(sme -> smeCode.equals(sme.getCode())).findFirst();
+        if (smeVo.isPresent()) {
+            employeeVo.setSme(smeVo.get());
+        } else {
+            throw new AppExceptionResponse(AppErrorKeys.INVALID_SME, HttpStatus.BAD_REQUEST);
+        }
         return add(employeeVo);
     }
 
