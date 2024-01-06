@@ -39,7 +39,7 @@ public class CustomResponseExceptionHandler extends ResponseEntityExceptionHandl
             AppResponse appResponse = new AppResponse(new Date(), ex.getHttpStatus(), appException.get().getMessage(), request.getDescription(false));
             return new ResponseEntity(appResponse, ex.getHttpStatus());
         }
-        AppResponse appResponse = new AppResponse(new Date(), "check with customer service", null);
+        AppResponse appResponse = new AppResponse(new Date(), "check with customer service", ex.getErrorKey());
         return new ResponseEntity(appResponse, HttpStatus.BAD_REQUEST);
     }
 
