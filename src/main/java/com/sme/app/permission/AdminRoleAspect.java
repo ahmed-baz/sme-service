@@ -11,12 +11,14 @@ import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 
 @Aspect
 @Component
+@Order(1)
 @RequiredArgsConstructor
 public class AdminRoleAspect {
 
@@ -33,15 +35,18 @@ public class AdminRoleAspect {
             throw new AppExceptionResponse(AppErrorKeys.USER_NOT_ALLOWED, HttpStatus.FORBIDDEN);
         }
         String serviceName = joinPoint.getSignature().getName();
-        UserVo userVo = (UserVo) joinPoint.getArgs()[1];
-        switch (serviceName) {
-            case CREATE_ADMIN:
-                userVo.setRole(UserRole.ADMIN);
-                break;
-            case UPDATE_ADMIN:
-                Long userId = (Long) joinPoint.getArgs()[0];
-                userVo.setSme(null);
-                validateAdminUpdateAction(userId);
+        Object[] args = joinPoint.getArgs();
+        if (args.length > 1 && args[1] instanceof UserVo) {
+            UserVo userVo = (UserVo) joinPoint.getArgs()[1];
+            switch (serviceName) {
+                case CREATE_ADMIN:
+                    userVo.setRole(UserRole.ADMIN);
+                    break;
+                case UPDATE_ADMIN:
+                    Long userId = (Long) joinPoint.getArgs()[0];
+                    userVo.setSme(null);
+                    validateAdminUpdateAction(userId);
+            }
         }
     }
 

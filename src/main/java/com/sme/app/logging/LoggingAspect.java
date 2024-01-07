@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Aspect
-@Order(1)
+@Order(3)
 @Component
 public class LoggingAspect {
 
