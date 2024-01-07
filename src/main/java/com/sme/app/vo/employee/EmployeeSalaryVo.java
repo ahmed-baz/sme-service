@@ -12,9 +12,9 @@ import java.math.BigDecimal;
 @Builder
 public class EmployeeSalaryVo {
 
-    private BigDecimal salary;
+    private String code;
+    private int count;
     private BigDecimal sum;
-    private BigDecimal count;
 
 }
 

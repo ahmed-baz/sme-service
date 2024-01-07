@@ -1,0 +1,29 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create_address" author="Ahmed.Baz" labels="sme">
+        <sql>
+            CREATE TABLE ADDRESS
+            (
+                ID           INT8         NOT NULL,
+                APARTMENT_NO VARCHAR(255),
+                BUILDING_NO  VARCHAR(255),
+                STREET_NAME  VARCHAR(255),
+                AREA         VARCHAR(255),
+                CITY         VARCHAR(255) NOT NULL,
+                EMPLOYEE_ID  INT8,
+                CONSTRAINT ADDRESS_PKEY PRIMARY KEY (ID),
+                CONSTRAINT ADDRESS_EMP_FKEY FOREIGN KEY (EMPLOYEE_ID) REFERENCES EMPLOYEE (ID)
+            );
+        </sql>
+        <sql>
+            CREATE SEQUENCE ADDRESS_SEQUENCE
+                INCREMENT 1
+                START 1;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

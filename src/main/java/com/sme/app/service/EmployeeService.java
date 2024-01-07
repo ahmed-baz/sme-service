@@ -12,7 +12,13 @@ public interface EmployeeService {
 
     EmployeeVo findById(Long id);
 
+    EmployeeVo findByEmail(String email);
+
+    EmployeeVo createEmployee(String smeCode, EmployeeVo employeeVo);
+
     EmployeeVO findEmpById(Long id);
+
+    boolean deleteEmployee(Long id);
 
     EmployeeVO findEmployeeById(Long id);
 

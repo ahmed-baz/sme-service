@@ -1,10 +1,10 @@
 package com.sme.app.criteria;
 
 
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
 
 @Data
 public class PaginationRequest {

@@ -37,7 +37,7 @@ public abstract class SmeManagerImpl<E extends EntityBase, VO extends BaseVo, R 
 
 
     @Override
-    public VO update(VO vo, Long id) {
+    public VO update(Long id, VO vo) {
         E entity = loadById(id);
         doValidateBeforeMapping(vo);
         getMapper().updateEntityFromVo(vo, entity);
@@ -48,7 +48,7 @@ public abstract class SmeManagerImpl<E extends EntityBase, VO extends BaseVo, R 
         return getMapper().entityToVo(savedEntity);
     }
 
-    private E doUpdate(E entity) {
+    protected E doUpdate(E entity) {
         return getRepo().save(entity);
     }
 
@@ -80,7 +80,7 @@ public abstract class SmeManagerImpl<E extends EntityBase, VO extends BaseVo, R 
         return getMapper().entityToVo(e);
     }
 
-    private E loadById(Long id) {
+    protected E loadById(Long id) {
         Optional<E> optionalE = getRepo().findById(id);
         if (optionalE.isPresent()) {
             return optionalE.get();

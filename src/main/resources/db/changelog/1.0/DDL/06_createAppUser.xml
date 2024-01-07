@@ -1,0 +1,35 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create_user" author="Ahmed.Baz" labels="sme">
+        <sql>
+            CREATE TABLE APP_USER
+            (
+                ID               INT8         NOT NULL,
+                NAME             VARCHAR(255) NOT NULL,
+                EMAIL            VARCHAR(255) NOT NULL,
+                ROLE             VARCHAR(255) NOT NULL,
+                ACTIVE           BOOLEAN      NOT NULL DEFAULT TRUE,
+                SME_ID           INT8,
+                CREATED_BY       INT8,
+                LAST_MODIFIED_BY INT8,
+                CREATED_AT       TIMESTAMP(6),
+                DELETED_AT       TIMESTAMP(6),
+                DELETED_BY       INT8,
+                LAST_MODIFIED_AT TIMESTAMP(6),
+                CONSTRAINT APP_USER_PKEY PRIMARY KEY (ID),
+                CONSTRAINT APP_USER_EMAIL_UKEY UNIQUE (EMAIL),
+                CONSTRAINT APP_USER_SME_FKEY FOREIGN KEY (SME_ID) REFERENCES SME (ID)
+            );
+        </sql>
+        <sql>
+            CREATE SEQUENCE APP_USER_SEQUENCE
+                INCREMENT 1
+                START 1;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

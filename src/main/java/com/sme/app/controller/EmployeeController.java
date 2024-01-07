@@ -1,7 +1,8 @@
 package com.sme.app.controller;
 
 import com.sme.app.integration.model.EmployeeVO;
-import com.sme.app.permission.annotations.AdminOnly;
+import com.sme.app.permission.annotations.MakerOnly;
+import com.sme.app.permission.annotations.SuperAdminOnly;
 import com.sme.app.service.EmployeeService;
 import com.sme.app.service.UserExecutorService;
 import com.sme.app.vo.employee.EmployeeSalaryVo;
@@ -28,6 +29,12 @@ public class EmployeeController {
         return new AppResponse<>(new PageResponse<>(employeeList));
     }
 
+    @MakerOnly
+    @PostMapping("/{smeCode}")
+    public AppResponse<EmployeeVo> createEmployee(@PathVariable String smeCode, @RequestBody EmployeeVo employeeVo) {
+        return new AppResponse<>(employeeService.createEmployee(smeCode, employeeVo));
+    }
+
     @PostMapping("/list/async/{size}")
     public AppResponse<Void> createEmployeeListAsync(@PathVariable int size) {
         employeeService.createEmployeeListAsync(size);
@@ -39,24 +46,34 @@ public class EmployeeController {
         return new AppResponse<>(employeeService.findById(id));
     }
 
-    @GetMapping("/find/{id}")
-    public AppResponse<EmployeeVO> findEmployee(@PathVariable Long id) {
-        return new AppResponse<>(employeeService.findEmpById(id));
+    @GetMapping("/email/{email}")
+    public AppResponse<EmployeeVo> findEmployeeByEmail(@PathVariable String email) {
+        return new AppResponse<>(employeeService.findByEmail(email));
     }
 
-    @AdminOnly
+    @GetMapping("/find/{id}")
+    public AppResponse<EmployeeVO> findEmployee(@PathVariable Long id) {
+        return new AppResponse<>(employeeService.findEmployeeById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public AppResponse<Boolean> deleteEmployee(@PathVariable Long id) {
+        return new AppResponse<>(employeeService.deleteEmployee(id));
+    }
+
+    @SuperAdminOnly
     @GetMapping("/mv/salary")
     public AppResponse<List<EmployeeSalaryVo>> getSalariesCountMV() {
         return new AppResponse<>(employeeService.getSalariesCountMV());
     }
 
-    @AdminOnly
+    @SuperAdminOnly
     @GetMapping("/view/salary")
     public AppResponse<List<EmployeeSalaryVo>> getSalariesCount() {
         return new AppResponse<>(employeeService.getSalariesCount());
     }
 
-    @AdminOnly
+    @SuperAdminOnly
     @GetMapping("/refresh-view")
     public AppResponse<Void> refreshView() {
         employeeService.refreshView();

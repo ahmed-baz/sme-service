@@ -1,13 +1,16 @@
 package com.sme.app.entity.employee;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sme.app.entity.Address;
 import com.sme.app.entity.EntityBase;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.sme.app.entity.Sme;
+import jakarta.persistence.*;
+import lombok.*;
 
-import javax.persistence.*;
+
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 
 @Getter
@@ -15,6 +18,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "EMPLOYEE")
+@Builder
+@NamedEntityGraph(name = "employee_entity_graph", attributeNodes = @NamedAttributeNode("address"))
 public class Employee extends EntityBase {
 
     @Id
@@ -25,6 +30,16 @@ public class Employee extends EntityBase {
     private String lastName;
     private String email;
     private BigDecimal salary;
+    @ManyToOne
+    @JoinColumn(name = "SME_Id")
+    private Sme sme;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "EMPLOYEE_ID")
+    private List<Address> address;
+    @JsonFormat(pattern = "yyyy/MM/dd")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "JOIN_DATE")
+    private Date joinDate;
 
 }
 

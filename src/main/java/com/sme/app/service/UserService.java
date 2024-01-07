@@ -10,7 +10,7 @@ public interface UserService {
 
     List<UserVo> findAll();
 
-    UserVo addUser(UserVo user);
+    UserVo addUser(String smeCode, UserVo user);
 
     UserVo updateUser(Long id, UserVo user);
 

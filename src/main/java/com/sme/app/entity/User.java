@@ -1,12 +1,11 @@
 package com.sme.app.entity;
 
 import com.sme.app.enums.UserRole;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 
 @Getter
@@ -25,6 +24,9 @@ public class User extends EntityBase {
     @Enumerated(EnumType.STRING)
     private UserRole role;
     private boolean active;
+    @ManyToOne
+    @JoinColumn(name = "SME_Id")
+    private Sme sme;
 
 }
 

@@ -2,6 +2,6 @@ package com.sme.app.enums;
 
 public enum UserRole {
 
-    ADMIN, USER, MAKER, CHECKER
+    SUPER_ADMIN, ADMIN, USER, MAKER, CHECKER
 
 }

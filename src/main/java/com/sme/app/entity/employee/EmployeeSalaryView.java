@@ -1,9 +1,9 @@
 package com.sme.app.entity.employee;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
 
-@Entity(name = "EMPLOYEE_SALARY_VIEW")
+@Entity(name = "SME_EMPLOYEES_SALARY_VIEW")
 public class EmployeeSalaryView extends EmployeeSalary {
 
 }

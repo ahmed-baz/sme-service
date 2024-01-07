@@ -1,4 +1,4 @@
-package com.sme.app.permission;
+package com.sme.app.interceptor;
 
 
 import com.sme.app.entity.User;
@@ -32,6 +32,10 @@ public class UserContext {
 
     public static UserRole getRole() {
         return userThreadLocal.get().getRole();
+    }
+
+    public static boolean isSuperAdmin() {
+        return !isGuest() && getRole().equals(UserRole.SUPER_ADMIN);
     }
 
     public static boolean isAdmin() {

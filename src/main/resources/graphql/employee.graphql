@@ -1,0 +1,23 @@
+scalar Long
+scalar BigDecimal
+
+type Employee {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    salary: BigDecimal
+    sme: Sme
+}
+
+extend type Query {
+    findAllEmployees: [Employee]!
+    countEmployees: Long!
+    findEmployeeById (id: ID!): Employee!
+}
+
+extend type Mutation {
+    createEmployee(firstName: String!, lastName: String, email: String!, salary: BigDecimal!, sme: ID!): Employee!
+    updateEmployee(id: ID!,firstName: String, lastName: String, email: String, salary: BigDecimal, sme: ID): Employee!
+    deleteEmployee(id: ID!): Boolean
+}

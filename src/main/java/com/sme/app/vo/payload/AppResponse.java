@@ -12,7 +12,6 @@ public class AppResponse<T> {
     private Date responseDate;
     private HttpStatus status;
     private String message;
-    private String details;
     private String errorCode;
     private T data;
 
@@ -30,17 +29,17 @@ public class AppResponse<T> {
         this.errorCode = "0";
     }
 
-    public AppResponse(Date responseDate, String message, String details) {
+    public AppResponse(Date responseDate, String message, String errorCode) {
         this.responseDate = responseDate;
         this.message = message;
-        this.details = details;
+        this.errorCode = errorCode;
     }
 
-    public AppResponse(Date responseDate, HttpStatus status, String message, String details) {
+    public AppResponse(Date responseDate, HttpStatus status, String message, String errorCode) {
         this.responseDate = responseDate;
         this.status = status;
         this.message = message;
-        this.details = details;
+        this.errorCode = errorCode;
     }
 
 }

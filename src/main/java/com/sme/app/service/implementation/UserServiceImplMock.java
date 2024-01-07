@@ -39,7 +39,7 @@ public class UserServiceImplMock implements UserService {
     }
 
     @Override
-    public UserVo addUser(UserVo user) {
+    public UserVo addUser(String smeCode, UserVo user) {
         user.setId(1655L);
         return user;
     }

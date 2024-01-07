@@ -3,23 +3,34 @@ package com.sme.app.service.implementation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.sme.app.criteria.EmployeeCriteria;
+import com.sme.app.entity.Sme;
+import com.sme.app.entity.User;
 import com.sme.app.entity.employee.Employee;
 import com.sme.app.entity.employee.EmployeeSalaryMV;
 import com.sme.app.entity.employee.EmployeeSalaryView;
+import com.sme.app.entity.employee.EmployeeView;
 import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.exception.AppExceptionResponse;
 import com.sme.app.integration.client.EmployeeClient;
 import com.sme.app.integration.model.EmployeeVO;
+import com.sme.app.mapper.BaseMapper;
 import com.sme.app.mapper.EmployeeMapper;
+import com.sme.app.repo.BaseRepo;
 import com.sme.app.repo.employee.EmployeeRepo;
 import com.sme.app.repo.employee.EmployeeSalaryMVRepo;
 import com.sme.app.repo.employee.EmployeeSalaryViewRepo;
 import com.sme.app.service.EmployeeService;
+import com.sme.app.service.SmeService;
 import com.sme.app.utils.EmployeeUtil;
+import com.sme.app.utils.SmeUtil;
+import com.sme.app.vo.SmeVo;
 import com.sme.app.vo.employee.EmployeeSalaryVo;
 import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +42,12 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
+@Log4j2
 @RequiredArgsConstructor
-public class EmployeeServiceImpl implements EmployeeService {
+public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, EmployeeCriteria> implements EmployeeService {
 
     private final EmployeeRepo employeeRepo;
     private final EmployeeMapper employeeMapper;
@@ -45,14 +58,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeClient employeeClient;
     private final EmployeeSalaryViewRepo employeeSalaryViewRepo;
     private final EmployeeSalaryMVRepo employeeSalaryMVRepo;
+    private final SmeService smeService;
 
     @Async
     @Override
     public void createEmployeeListAsync(int userNo) {
+        List<SmeVo> smes = smeService.findAllSmes();
         List<EmployeeVo> employeeList = EmployeeUtil.getEmployeeList(userNo, 1);
-        employeeRepo.saveAll(employeeMapper.voListToEntityList(employeeList));
+        List<Employee> employees = employeeMapper.voListToEntityList(employeeList);
+        employees.forEach(employee -> employee.setSme(SmeUtil.anySme(smes)));
+        employeeRepo.saveAll(employees);
     }
-
 
     @Override
     public EmployeeVo findById(Long id) {
@@ -64,13 +80,45 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeVO findEmpById(Long id) {
-        AppResponse<EmployeeVO> response = employeeClient.findEmployeeById(id);
-        if (HttpStatus.OK.equals(response.getStatus())) {
-            return response.getData();
+    public EmployeeVo findByEmail(String email) {
+        Optional<EmployeeView> employee = employeeRepo.findEmployeeByEmail(email);
+        if (employee.isPresent()) {
+            return employeeMapper.fromEmployeeViewToEmployeeVO(employee.get());
         }
-        String errorCode = response.getErrorCode();
-        throw new AppExceptionResponse(errorCode, HttpStatus.BAD_REQUEST);
+        throw new AppExceptionResponse(AppErrorKeys.EMPLOYEE_NOT_FOUND, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public EmployeeVo createEmployee(String smeCode, EmployeeVo employeeVo) {
+        List<SmeVo> smes = smeService.findAllSmes();
+        Optional<SmeVo> smeVo = smes.stream().filter(sme -> smeCode.equals(sme.getCode())).findFirst();
+        if (smeVo.isPresent()) {
+            employeeVo.setSme(smeVo.get());
+        } else {
+            throw new AppExceptionResponse(AppErrorKeys.INVALID_SME, HttpStatus.BAD_REQUEST);
+        }
+        return add(employeeVo);
+    }
+
+    @Override
+    public EmployeeVO findEmpById(Long id) {
+        try {
+            AppResponse<EmployeeVO> response = employeeClient.findEmployeeById(id);
+            if (HttpStatus.OK.equals(response.getStatus())) {
+                return response.getData();
+            }
+            String errorCode = response.getErrorCode();
+            throw new AppExceptionResponse(errorCode, HttpStatus.BAD_REQUEST);
+        } catch (Exception ex) {
+            log.error(ex);
+        }
+        throw new AppExceptionResponse(AppErrorKeys.INTEGRATION_ISSUE);
+    }
+
+    @Override
+    public boolean deleteEmployee(Long id) {
+        delete(id);
+        return true;
     }
 
     @Override
@@ -92,20 +140,30 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<EmployeeSalaryVo> getSalariesCountMV() {
         List<EmployeeSalaryMV> all = employeeSalaryMVRepo.findAll();
-        List<EmployeeSalaryVo> list = all.stream().map(data -> EmployeeSalaryVo.builder().salary(data.getSalary()).count(data.getCount()).sum(data.getSum()).build()).collect(Collectors.toList());
+        List<EmployeeSalaryVo> list = all.stream().map(data -> EmployeeSalaryVo.builder().code(data.getCode()).count(data.getCount()).sum(data.getSum()).build()).collect(Collectors.toList());
         return list;
     }
 
     @Override
     public List<EmployeeSalaryVo> getSalariesCount() {
         List<EmployeeSalaryView> all = employeeSalaryViewRepo.findAll();
-        List<EmployeeSalaryVo> list = all.stream().map(data -> EmployeeSalaryVo.builder().salary(data.getSalary()).count(data.getCount()).sum(data.getSum()).build()).collect(Collectors.toList());
+        List<EmployeeSalaryVo> list = all.stream().map(data -> EmployeeSalaryVo.builder().code(data.getCode()).count(data.getCount()).sum(data.getSum()).build()).collect(Collectors.toList());
         return list;
     }
 
     @Override
     public void refreshView() {
         employeeSalaryMVRepo.refreshView();
+    }
+
+    @Override
+    public BaseMapper<Employee, EmployeeVo> getMapper() {
+        return employeeMapper;
+    }
+
+    @Override
+    public BaseRepo<Employee> getRepo() {
+        return employeeRepo;
     }
 
 }

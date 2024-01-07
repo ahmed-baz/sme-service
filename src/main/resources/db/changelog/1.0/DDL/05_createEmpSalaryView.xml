@@ -7,14 +7,15 @@
     <changeSet id="create_employee_salary_view" author="Ahmed.Baz" labels="sme">
         <sql>
             drop
-                view if exists employee_salary_view;
-            create view employee_salary_view
+                view if exists sme_employees_salary_view;
+            create view sme_employees_salary_view
             as
-            select salary,
-                   sum(salary),
-                   count(salary)
-            from employee e
-            group by salary;
+            select sme.code,
+                   count(emp),
+                   sum(salary)
+            from employee emp inner join sme sme
+                on emp.sme_id = sme.id
+            group by sme.code;
         </sql>
     </changeSet>
 
