@@ -18,7 +18,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @AdminOnly
     @GetMapping("/{id}")
     public AppResponse<UserVo> findUser(@PathVariable Long id) {
         return new AppResponse<>(userService.findById(id));
@@ -40,6 +39,12 @@ public class UserController {
     @PostMapping("/{smeCode}")
     public AppResponse<UserVo> createUser(@PathVariable String smeCode, @RequestBody UserVo user) {
         return new AppResponse<>(userService.addUser(smeCode, user));
+    }
+
+    @SuperAdminOnly
+    @PutMapping("/admin/{id}")
+    public AppResponse<UserVo> updateAdmin(@PathVariable Long id, @RequestBody UserVo user) {
+        return new AppResponse<>(userService.updateUser(id, user));
     }
 
     @AdminOnly

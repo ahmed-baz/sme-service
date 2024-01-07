@@ -14,7 +14,8 @@ public class UserVo extends BaseVo {
     private String name;
     private String email;
     private UserRole role;
-    private boolean active;
+    private Boolean active;
+    private SmeVo sme;
 
 }
 

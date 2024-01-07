@@ -3,6 +3,7 @@ package com.sme.app.service.implementation;
 import com.sme.app.enums.UserRole;
 import com.sme.app.service.UserService;
 import com.sme.app.utils.EmployeeUtil;
+import com.sme.app.vo.SmeVo;
 import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.UserVo;
 import lombok.Getter;
@@ -22,7 +23,8 @@ public class UserServiceImplMock implements UserService {
     public UserVo findById(Long id) {
         EmployeeVo employee = EmployeeUtil.createRandomEmployee();
         String name = employee.getFirstName() + " " + employee.getLastName();
-        return new UserVo(name, employee.getEmail(), UserRole.USER, true);
+        SmeVo sme = SmeVo.builder().name("Demo").code("DEMO").build();
+        return new UserVo(name, employee.getEmail(), UserRole.USER, true, sme);
     }
 
     @Override

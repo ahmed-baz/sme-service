@@ -23,7 +23,7 @@ public class User extends EntityBase {
     private String email;
     @Enumerated(EnumType.STRING)
     private UserRole role;
-    private boolean active;
+    private Boolean active;
     @ManyToOne
     @JoinColumn(name = "SME_Id")
     private Sme sme;
