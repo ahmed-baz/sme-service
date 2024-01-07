@@ -36,7 +36,7 @@ public class CustomResponseExceptionHandler extends ResponseEntityExceptionHandl
     public ResponseEntity<Object> handleAppException(AppExceptionResponse ex, WebRequest request) {
         Optional<AppException> appException = appExceptionRepo.findByCode(ex.getErrorKey());
         if (appException.isPresent()) {
-            AppResponse appResponse = new AppResponse(new Date(), ex.getHttpStatus(), appException.get().getMessage(), request.getDescription(false));
+            AppResponse appResponse = new AppResponse(new Date(), ex.getHttpStatus(), appException.get().getMessage(), ex.getErrorKey());
             return new ResponseEntity(appResponse, ex.getHttpStatus());
         }
         AppResponse appResponse = new AppResponse(new Date(), "check with customer service", ex.getErrorKey());
