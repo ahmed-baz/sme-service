@@ -1,14 +1,11 @@
 package com.sme.app.permission;
 
 import com.sme.app.entity.Sme;
-import com.sme.app.entity.User;
 import com.sme.app.enums.UserRole;
 import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.exception.AppExceptionResponse;
 import com.sme.app.interceptor.UserContext;
-import com.sme.app.service.SmeService;
 import com.sme.app.vo.UserVo;
-import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

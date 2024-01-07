@@ -1,5 +1,6 @@
 package com.sme.app.controller;
 
+import com.sme.app.logging.annotation.ExecutionTimeLogger;
 import com.sme.app.permission.annotations.SuperAdminOnly;
 import com.sme.app.service.SmeService;
 import com.sme.app.vo.SmeVo;
@@ -29,6 +30,7 @@ public class SmeController {
 
     @SuperAdminOnly
     @GetMapping("/all")
+    @ExecutionTimeLogger
     public AppResponse<List<SmeVo>> findAll() {
         return new AppResponse<>(smeService.findAllSmes());
     }
