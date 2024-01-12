@@ -4,8 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.sme.app.criteria.EmployeeCriteria;
-import com.sme.app.entity.Sme;
-import com.sme.app.entity.User;
 import com.sme.app.entity.employee.Employee;
 import com.sme.app.entity.employee.EmployeeSalaryMV;
 import com.sme.app.entity.employee.EmployeeSalaryView;
@@ -30,7 +28,6 @@ import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +39,6 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @Log4j2
@@ -77,6 +73,18 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
             return employeeMapper.entityToVo(employee.get());
         }
         throw new AppExceptionResponse(AppErrorKeys.EMPLOYEE_NOT_FOUND, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public List<EmployeeVo> findList() {
+        List<Employee> all = employeeRepo.findAll();
+        return employeeMapper.entityListToVoList(all);
+    }
+
+    @Override
+    public List<EmployeeVo> findListBySmeName(String name) {
+        List<Employee> all = employeeRepo.findBySmeNameIgnoreCaseContaining(name);
+        return employeeMapper.entityListToVoList(all);
     }
 
     @Override

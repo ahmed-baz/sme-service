@@ -21,4 +21,7 @@ public interface EmployeeRepo extends BaseRepo<Employee> {
 
     List<Employee> findBySmeIsNull();
 
+    @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "employee_entity_graph")
+    List<Employee> findBySmeNameIgnoreCaseContaining(String name);
+
 }

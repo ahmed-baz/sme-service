@@ -5,6 +5,7 @@ import com.sme.app.entity.Address;
 import com.sme.app.entity.EntityBase;
 import com.sme.app.entity.Sme;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Index;
 import lombok.*;
 
 
@@ -32,6 +33,7 @@ public class Employee extends EntityBase {
     private BigDecimal salary;
     @ManyToOne
     @JoinColumn(name = "SME_Id")
+    @Index(name = "IDX_SME_NAME")
     private Sme sme;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "EMPLOYEE_ID")

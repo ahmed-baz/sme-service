@@ -29,6 +29,18 @@ public class EmployeeController {
         return new AppResponse<>(new PageResponse<>(employeeList));
     }
 
+    @GetMapping("all")
+    public AppResponse<PageResponse<EmployeeVo>> findList() {
+        List<EmployeeVo> employeeList = employeeService.findList();
+        return new AppResponse<>(new PageResponse<>(employeeList));
+    }
+
+    @GetMapping
+    public AppResponse<PageResponse<EmployeeVo>> findList(@RequestParam String sme) {
+        List<EmployeeVo> employeeList = employeeService.findListBySmeName(sme);
+        return new AppResponse<>(new PageResponse<>(employeeList));
+    }
+
     @MakerOnly
     @PostMapping("/{smeCode}")
     public AppResponse<EmployeeVo> createEmployee(@PathVariable String smeCode, @RequestBody EmployeeVo employeeVo) {
