@@ -10,6 +10,9 @@ import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import com.sme.app.vo.payload.PageResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +23,7 @@ import java.util.List;
 @RequestMapping("api/v1/employee")
 public class EmployeeController {
 
+    private static final Logger logger = LogManager.getLogger(EmployeeController.class);
     private final EmployeeService employeeService;
     private final UserExecutorService userExecutorService;
 
@@ -37,6 +41,7 @@ public class EmployeeController {
 
     @GetMapping
     public AppResponse<PageResponse<EmployeeVo>> findList(@RequestParam String sme) {
+        logger.log(Level.INFO, "find employee list by SME named {}", sme);
         List<EmployeeVo> employeeList = employeeService.findListBySmeName(sme);
         return new AppResponse<>(new PageResponse<>(employeeList));
     }
