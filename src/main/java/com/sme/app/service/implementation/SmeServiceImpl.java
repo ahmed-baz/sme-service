@@ -39,7 +39,7 @@ public class SmeServiceImpl extends SmeManagerImpl<Sme, SmeVo, SmeCriteria> impl
 
 
     @Override
-    @Cacheable(value = "findSmeList")
+    //@Cacheable(value = "findSmeList")
     public List<SmeVo> findAllSmes() {
         List<Sme> all = smeRepo.findAllByActive(true);
         return smeMapper.entityListToVoList(all);
