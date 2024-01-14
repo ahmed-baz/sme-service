@@ -25,5 +25,6 @@
 - [ ] lombok
 - [ ] mapstruct
 - [ ] Graphql
+- [ ] Jasypt
 - [ ] Docker
 - [ ] Docker Compose
