@@ -10,7 +10,10 @@ import com.sme.app.vo.employee.EmployeeSalaryVo;
 import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import com.sme.app.vo.payload.PageResponse;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -71,8 +74,11 @@ public class EmployeeController {
         return new AppResponse<>(employeeService.findByEmail(email));
     }
 
-    @CircuitBreaker(name = "findEmpById-api", fallbackMethod = "getDefaultIntResponse")
     @GetMapping("/find/{id}")
+    @CircuitBreaker(name = "findEmpById-api", fallbackMethod = "getDefaultIntResponse")
+    @Retry(name = "findEmpById-api", fallbackMethod = "getDefaultIntResponse")
+    @RateLimiter(name = "findEmpById-api")
+    @Bulkhead(name = "findEmpById-api")
     public AppResponse<EmployeeVO> findEmployee(@PathVariable Long id) {
         return new AppResponse<>(employeeService.findEmpById(id));
     }
