@@ -110,17 +110,17 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
 
     @Override
     public EmployeeVO findEmpById(Long id) {
+        String errorCode = null;
         try {
             AppResponse<EmployeeVO> response = employeeClient.findEmployeeById(id);
             if (HttpStatus.OK.equals(response.getStatus())) {
                 return response.getData();
             }
-            String errorCode = response.getErrorCode();
-            throw new AppExceptionResponse(errorCode, HttpStatus.BAD_REQUEST);
+            errorCode = response.getErrorCode();
         } catch (Exception ex) {
             log.error(ex);
         }
-        throw new AppExceptionResponse(AppErrorKeys.INTEGRATION_ISSUE);
+        throw new AppExceptionResponse(errorCode != null ? errorCode : AppErrorKeys.INTEGRATION_ISSUE, HttpStatus.BAD_REQUEST);
     }
 
     @Override
