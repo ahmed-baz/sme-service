@@ -1,5 +1,6 @@
 package com.sme.app.controller;
 
+import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.integration.model.EmployeeVO;
 import com.sme.app.permission.annotations.MakerOnly;
 import com.sme.app.permission.annotations.SuperAdminOnly;
@@ -9,10 +10,12 @@ import com.sme.app.vo.employee.EmployeeSalaryVo;
 import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import com.sme.app.vo.payload.PageResponse;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -68,6 +71,7 @@ public class EmployeeController {
         return new AppResponse<>(employeeService.findByEmail(email));
     }
 
+    @CircuitBreaker(name = "findEmpById-api", fallbackMethod = "getDefaultIntResponse")
     @GetMapping("/find/{id}")
     public AppResponse<EmployeeVO> findEmployee(@PathVariable Long id) {
         return new AppResponse<>(employeeService.findEmpById(id));
@@ -96,5 +100,10 @@ public class EmployeeController {
         employeeService.refreshView();
         return new AppResponse<>();
     }
+
+    private AppResponse<Void> getDefaultIntResponse(Throwable throwable) {
+        return new AppResponse<>(AppErrorKeys.SERVICE_DOWN, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
 
 }

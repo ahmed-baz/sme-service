@@ -35,6 +35,12 @@ public class AppResponse<T> {
         this.errorCode = errorCode;
     }
 
+    public AppResponse(String errorCode, HttpStatus status) {
+        this.status = status;
+        this.responseDate = new Date();
+        this.errorCode = errorCode;
+    }
+
     public AppResponse(Date responseDate, HttpStatus status, String message, String errorCode) {
         this.responseDate = responseDate;
         this.status = status;
