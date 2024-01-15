@@ -45,6 +45,76 @@
                     'EMAIL_IS_REQUIRED',
                     'email is required',
                     'email is required');
+
+            insert
+            into APP_EXCEPTION(ID,
+                               CODE,
+                               MESSAGE,
+                               LOCALIZED_MESSAGE)
+            values (nextval('APP_EXCEPTION_SEQUENCE'),
+                    'GENERAL_ERROR',
+                    'kindly, check with the support',
+                    'kindly,check with the support');
+
+            insert
+            into APP_EXCEPTION(ID,
+                               CODE,
+                               MESSAGE,
+                               LOCALIZED_MESSAGE)
+            values (nextval('APP_EXCEPTION_SEQUENCE'),
+                    'EXIST_EMAIL',
+                    'the email is already exist',
+                    'the email is already exist');
+
+            insert
+            into APP_EXCEPTION(ID,
+                               CODE,
+                               MESSAGE,
+                               LOCALIZED_MESSAGE)
+            values (nextval('APP_EXCEPTION_SEQUENCE'),
+                    'SME_NOT_FOUND',
+                    'the sme is not found',
+                    'the sme is not found');
+
+            insert
+            into APP_EXCEPTION(ID,
+                               CODE,
+                               MESSAGE,
+                               LOCALIZED_MESSAGE)
+            values (nextval('APP_EXCEPTION_SEQUENCE'),
+                    'INTEGRATION_ISSUE',
+                    'kindly, check with the support',
+                    'kindly, check with the support');
+
+            insert
+            into APP_EXCEPTION(ID,
+                               CODE,
+                               MESSAGE,
+                               LOCALIZED_MESSAGE)
+            values (nextval('APP_EXCEPTION_SEQUENCE'),
+                    'SME_ACCESS_NOT_ALLOWED_WITH_ADMIN',
+                    'sme access is not allowed',
+                    'sme access is not allowed');
+
+            insert
+            into APP_EXCEPTION(ID,
+                               CODE,
+                               MESSAGE,
+                               LOCALIZED_MESSAGE)
+            values (nextval('APP_EXCEPTION_SEQUENCE'),
+                    'INVALID_SME',
+                    'invalid sme',
+                    'invalid sme');
+
+            insert
+            into APP_EXCEPTION(ID,
+                               CODE,
+                               MESSAGE,
+                               LOCALIZED_MESSAGE)
+            values (nextval('APP_EXCEPTION_SEQUENCE'),
+                    'SERVICE_DOWN',
+                    'the service is down',
+                    'the service is down');
         </sql>
     </changeSet>
 
