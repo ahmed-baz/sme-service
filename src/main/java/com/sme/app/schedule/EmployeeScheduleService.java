@@ -1,9 +1,7 @@
 package com.sme.app.schedule;
 
 
-import com.sme.app.entity.Sme;
 import com.sme.app.entity.employee.Employee;
-import com.sme.app.repo.SmeRepo;
 import com.sme.app.repo.employee.EmployeeRepo;
 import com.sme.app.service.SmeService;
 import com.sme.app.utils.SmeUtil;
@@ -14,7 +12,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
