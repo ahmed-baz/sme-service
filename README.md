@@ -21,6 +21,7 @@
 - [ ] postgresql DB
 - [ ] view
 - [ ] materialized view
+- [ ] auditing by auditorAware
 - [ ] liquibase
 - [ ] lombok
 - [ ] mapstruct
