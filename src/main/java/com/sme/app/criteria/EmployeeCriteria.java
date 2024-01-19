@@ -17,5 +17,5 @@ public class EmployeeCriteria extends PaginationRequest {
     private BigDecimal salaryTo;
     private Date joinDateFrom;
     private Date joinDateTo;
-    private String smeName;
+    private String smeCode;
 }
