@@ -10,9 +10,9 @@ import lombok.Data;
 public class PaginationRequest {
 
     @PositiveOrZero
-    private Integer index;
+    private Integer pageNumber;
 
     @Positive
-    private Integer size;
+    private Integer pageSize;
 
 }

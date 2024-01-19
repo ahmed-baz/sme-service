@@ -70,7 +70,7 @@ public abstract class SmeManagerImpl<E extends EntityBase, VO extends BaseVo, R 
 
 
     protected PageRequest preparePageable(R request) {
-        return PageRequest.of(request.getIndex(), request.getSize());
+        return PageRequest.of(request.getPageNumber(), request.getPageSize());
     }
 
 

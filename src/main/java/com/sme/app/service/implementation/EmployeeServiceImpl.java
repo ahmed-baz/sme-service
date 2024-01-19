@@ -20,15 +20,21 @@ import com.sme.app.repo.employee.EmployeeSalaryMVRepo;
 import com.sme.app.repo.employee.EmployeeSalaryViewRepo;
 import com.sme.app.service.EmployeeService;
 import com.sme.app.service.SmeService;
+import com.sme.app.specification.EmployeeSpecifications;
 import com.sme.app.utils.EmployeeUtil;
 import com.sme.app.utils.SmeUtil;
 import com.sme.app.vo.SmeVo;
 import com.sme.app.vo.employee.EmployeeSalaryVo;
 import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
+import com.sme.app.vo.payload.PageResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
@@ -79,6 +85,14 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
     public List<EmployeeVo> findList() {
         List<Employee> all = employeeRepo.findAll();
         return employeeMapper.entityListToVoList(all);
+    }
+
+    @Override
+    public PageResponse<EmployeeVo> search(EmployeeCriteria criteria) {
+        Specification<Employee> employeeSpec = EmployeeSpecifications.createEmployeeSpec(criteria);
+        PageRequest pageRequest = preparePageable(criteria);
+        Page<Employee> all = employeeRepo.findAll(employeeSpec, pageRequest);
+        return employeeMapper.preparePageResponse(all);
     }
 
     @Override

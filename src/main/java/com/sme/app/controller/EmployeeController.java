@@ -1,5 +1,6 @@
 package com.sme.app.controller;
 
+import com.sme.app.criteria.EmployeeCriteria;
 import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.integration.model.EmployeeVO;
 import com.sme.app.permission.annotations.MakerOnly;
@@ -43,6 +44,12 @@ public class EmployeeController {
     public AppResponse<PageResponse<EmployeeVo>> findList() {
         List<EmployeeVo> employeeList = employeeService.findList();
         return new AppResponse<>(new PageResponse<>(employeeList));
+    }
+
+    @GetMapping("search")
+    public AppResponse<PageResponse<EmployeeVo>> search(@RequestBody EmployeeCriteria criteria) {
+        PageResponse<EmployeeVo> pageResponse = employeeService.search(criteria);
+        return new AppResponse<>(pageResponse);
     }
 
     @GetMapping
