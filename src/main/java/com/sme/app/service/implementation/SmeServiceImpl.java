@@ -6,6 +6,7 @@ import com.sme.app.mapper.BaseMapper;
 import com.sme.app.mapper.SmeMapper;
 import com.sme.app.repo.BaseRepo;
 import com.sme.app.repo.SmeRepo;
+import com.sme.app.service.CacheManagerService;
 import com.sme.app.service.SmeService;
 import com.sme.app.vo.SmeVo;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class SmeServiceImpl extends SmeManagerImpl<Sme, SmeVo, SmeCriteria> impl
 
     private final SmeRepo smeRepo;
     private final SmeMapper smeMapper;
+    private final CacheManagerService cacheManagerService;
 
     @Override
     public SmeVo findSmeById(Long id) {
@@ -60,6 +62,7 @@ public class SmeServiceImpl extends SmeManagerImpl<Sme, SmeVo, SmeCriteria> impl
     public Long activateSme(Long id) {
         loadById(id);
         smeRepo.activateSme(id);
+        clearSmeCache();
         return id;
     }
 
@@ -67,7 +70,7 @@ public class SmeServiceImpl extends SmeManagerImpl<Sme, SmeVo, SmeCriteria> impl
     public Long deleteSme(Long id) {
         Sme sme = loadById(id);
         sme.setActive(false);
-        doUpdate(sme);
+        updateSme(id, smeMapper.entityToVo(sme));
         return id;
     }
 
@@ -80,4 +83,24 @@ public class SmeServiceImpl extends SmeManagerImpl<Sme, SmeVo, SmeCriteria> impl
     public BaseRepo<Sme> getRepo() {
         return smeRepo;
     }
+
+    @Override
+    protected void doAfterCreate(SmeVo dto, Sme entity) {
+        clearSmeCache();
+    }
+
+    @Override
+    protected void doAfterUpdate(SmeVo dto, Sme entity) {
+        clearSmeCache();
+    }
+
+    @Override
+    protected void doAfterDelete(Long id) {
+        clearSmeCache();
+    }
+
+    private void clearSmeCache() {
+        cacheManagerService.clearCacheByName("findSmeList");
+    }
+
 }
