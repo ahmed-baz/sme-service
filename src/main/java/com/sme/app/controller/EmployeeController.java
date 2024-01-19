@@ -52,6 +52,12 @@ public class EmployeeController {
         return new AppResponse<>(pageResponse);
     }
 
+    @GetMapping("statistics")
+    public AppResponse<PageResponse<EmployeeVo>> getEmployeeSalaryStatistics(@RequestBody EmployeeCriteria criteria) {
+        List<EmployeeVo> employeeList = employeeService.getEmployeeSalaryStatistics(criteria);
+        return new AppResponse<>(new PageResponse<>(employeeList));
+    }
+
     @GetMapping
     public AppResponse<PageResponse<EmployeeVo>> findList(@RequestParam String sme) {
         logger.log(Level.INFO, "find employee list by SME named {}", sme);

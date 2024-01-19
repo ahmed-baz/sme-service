@@ -73,6 +73,11 @@ public abstract class SmeManagerImpl<E extends EntityBase, VO extends BaseVo, R 
         return PageRequest.of(request.getPageNumber(), request.getPageSize());
     }
 
+    protected PageRequest preparePageable(R request, String property, Sort.Direction direction) {
+        Sort sort = direction.isAscending() ? Sort.by(property).ascending() : Sort.by(property).descending();
+        return PageRequest.of(request.getPageNumber(), request.getPageSize(), sort);
+    }
+
 
     @Override
     public VO findById(Long id) {

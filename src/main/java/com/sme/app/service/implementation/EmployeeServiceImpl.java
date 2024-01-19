@@ -33,7 +33,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -93,6 +93,15 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
         PageRequest pageRequest = preparePageable(criteria);
         Page<Employee> all = employeeRepo.findAll(employeeSpec, pageRequest);
         return employeeMapper.preparePageResponse(all);
+    }
+
+    @Override
+    public List<EmployeeVo> getEmployeeSalaryStatistics(EmployeeCriteria criteria) {
+        Specification<Employee> employeeSpec = EmployeeSpecifications.createEmployeeSpec(criteria);
+        criteria.setPageNumber(0);
+        PageRequest pageRequest = preparePageable(criteria, "salary", Sort.Direction.DESC);
+        Page<Employee> all = employeeRepo.findAll(employeeSpec, pageRequest);
+        return employeeMapper.entityListToVoList(all.getContent());
     }
 
     @Override

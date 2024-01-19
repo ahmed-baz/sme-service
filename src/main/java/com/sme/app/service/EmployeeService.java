@@ -18,6 +18,8 @@ public interface EmployeeService {
 
     PageResponse<EmployeeVo> search(EmployeeCriteria criteria);
 
+    List<EmployeeVo> getEmployeeSalaryStatistics(EmployeeCriteria criteria);
+
     List<EmployeeVo> findListBySmeName(String name);
 
     EmployeeVo findByEmail(String email);
