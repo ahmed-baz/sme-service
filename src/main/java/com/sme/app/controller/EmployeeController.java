@@ -15,12 +15,18 @@ import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import static com.sme.app.exception.AppErrorKeys.*;
+
 
 import java.util.List;
 
@@ -67,7 +73,7 @@ public class EmployeeController {
 
     @MakerOnly
     @PostMapping("/{smeCode}")
-    public AppResponse<EmployeeVo> createEmployee(@PathVariable String smeCode, @RequestBody EmployeeVo employeeVo) {
+    public AppResponse<EmployeeVo> createEmployee(@PathVariable String smeCode, @Valid @RequestBody EmployeeVo employeeVo) {
         return new AppResponse<>(employeeService.createEmployee(smeCode, employeeVo));
     }
 
