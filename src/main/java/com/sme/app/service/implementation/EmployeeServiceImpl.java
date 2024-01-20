@@ -105,9 +105,10 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
     }
 
     @Override
-    public List<EmployeeVo> findListBySmeName(String name) {
-        List<Employee> all = employeeRepo.findBySmeNameIgnoreCaseContaining(name);
-        return employeeMapper.entityListToVoList(all);
+    public PageResponse<EmployeeVo> findListBySmeName(String name, int index, int size) {
+        PageRequest pageRequest = PageRequest.of(index, size);
+        Page<Employee> all = employeeRepo.findBySmeNameIgnoreCaseContaining(name, pageRequest);
+        return employeeMapper.preparePageResponse(all);
     }
 
     @Override

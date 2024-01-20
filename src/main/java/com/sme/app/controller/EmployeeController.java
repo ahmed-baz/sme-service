@@ -16,7 +16,7 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -34,6 +34,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/employee")
+@Validated
 public class EmployeeController {
 
     private static final Logger logger = LogManager.getLogger(EmployeeController.class);
@@ -53,22 +54,24 @@ public class EmployeeController {
     }
 
     @GetMapping("search")
-    public AppResponse<PageResponse<EmployeeVo>> search(@RequestBody EmployeeCriteria criteria) {
+    public AppResponse<PageResponse<EmployeeVo>> search(@Valid @RequestBody EmployeeCriteria criteria) {
         PageResponse<EmployeeVo> pageResponse = employeeService.search(criteria);
         return new AppResponse<>(pageResponse);
     }
 
     @GetMapping("statistics")
-    public AppResponse<PageResponse<EmployeeVo>> getEmployeeSalaryStatistics(@RequestBody EmployeeCriteria criteria) {
+    public AppResponse<PageResponse<EmployeeVo>> getEmployeeSalaryStatistics(@Valid @RequestBody EmployeeCriteria criteria) {
         List<EmployeeVo> employeeList = employeeService.getEmployeeSalaryStatistics(criteria);
         return new AppResponse<>(new PageResponse<>(employeeList));
     }
 
     @GetMapping
-    public AppResponse<PageResponse<EmployeeVo>> findList(@RequestParam String sme) {
+    public AppResponse<PageResponse<EmployeeVo>> findList(@NotEmpty(message = SME_IS_REQUIRED) @RequestParam String sme,
+                                                          @NotNull(message = PAGE_NUMBER_IS_REQUIRED) @PositiveOrZero(message = INVALID_PAGE_NUMBER) @RequestParam Integer index,
+                                                          @NotNull(message = PAGE_SIZE_IS_REQUIRED) @Positive(message = INVALID_PAGE_SIZE) @RequestParam Integer size) {
         logger.log(Level.INFO, "find employee list by SME named {}", sme);
-        List<EmployeeVo> employeeList = employeeService.findListBySmeName(sme);
-        return new AppResponse<>(new PageResponse<>(employeeList));
+        PageResponse<EmployeeVo> pageResponse = employeeService.findListBySmeName(sme, index, size);
+        return new AppResponse<>(pageResponse);
     }
 
     @MakerOnly

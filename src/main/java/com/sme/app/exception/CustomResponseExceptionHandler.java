@@ -1,10 +1,10 @@
 package com.sme.app.exception;
 
 import com.sme.app.entity.AppException;
-import com.sme.app.entity.Sme;
-import com.sme.app.entity.employee.Employee;
 import com.sme.app.repo.AppExceptionRepo;
 import com.sme.app.vo.payload.AppResponse;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Objects;
 import java.util.Optional;
 
 @ControllerAdvice
@@ -30,8 +30,13 @@ public class CustomResponseExceptionHandler extends ResponseEntityExceptionHandl
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleAllException(Exception ex, WebRequest request) {
-        AppResponse appResponse = new AppResponse(new Date(), HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity(appResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        String message = ex.getMessage();
+        if (ex instanceof ConstraintViolationException) {
+            ArrayList<ConstraintViolation<?>> violations = new ArrayList<>(((ConstraintViolationException) ex).getConstraintViolations());
+            ConstraintViolation<?> constraintViolation = violations.get(0);
+            message = constraintViolation.getMessageTemplate();
+        }
+        return mapAppException(message, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(AppExceptionResponse.class)

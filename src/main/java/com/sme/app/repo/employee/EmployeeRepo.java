@@ -4,6 +4,8 @@ package com.sme.app.repo.employee;
 import com.sme.app.entity.employee.Employee;
 import com.sme.app.entity.employee.EmployeeView;
 import com.sme.app.repo.BaseRepo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +24,6 @@ public interface EmployeeRepo extends BaseRepo<Employee> {
     List<Employee> findBySmeIsNull();
 
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "employee_entity_graph")
-    List<Employee> findBySmeNameIgnoreCaseContaining(String name);
+    Page<Employee> findBySmeNameIgnoreCaseContaining(String name, PageRequest pageRequest);
 
 }

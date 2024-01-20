@@ -5,6 +5,7 @@ import com.sme.app.integration.model.EmployeeVO;
 import com.sme.app.vo.employee.EmployeeSalaryVo;
 import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.PageResponse;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface EmployeeService {
 
     List<EmployeeVo> getEmployeeSalaryStatistics(EmployeeCriteria criteria);
 
-    List<EmployeeVo> findListBySmeName(String name);
+    PageResponse<EmployeeVo> findListBySmeName(String name, int index, int size);
 
     EmployeeVo findByEmail(String email);
 
