@@ -2,6 +2,8 @@ package com.sme.app.service.implementation;
 
 import com.sme.app.criteria.SmeCriteria;
 import com.sme.app.entity.Sme;
+import com.sme.app.exception.AppErrorKeys;
+import com.sme.app.exception.AppExceptionResponse;
 import com.sme.app.mapper.BaseMapper;
 import com.sme.app.mapper.SmeMapper;
 import com.sme.app.repo.BaseRepo;
@@ -10,6 +12,7 @@ import com.sme.app.service.CacheManagerService;
 import com.sme.app.service.SmeService;
 import com.sme.app.vo.SmeVo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
 public class SmeServiceImpl extends SmeManagerImpl<Sme, SmeVo, SmeCriteria> implements SmeService {
@@ -36,7 +40,7 @@ public class SmeServiceImpl extends SmeManagerImpl<Sme, SmeVo, SmeCriteria> impl
         if (sme.isPresent()) {
             return smeMapper.entityToVo(sme.get());
         }
-        return null;
+        throw new AppExceptionResponse(AppErrorKeys.SME_NOT_FOUND);
     }
 
 
@@ -51,6 +55,16 @@ public class SmeServiceImpl extends SmeManagerImpl<Sme, SmeVo, SmeCriteria> impl
     public SmeVo addSme(SmeVo smeVo) {
         smeVo.setActive(true);
         return add(smeVo);
+    }
+
+    @Override
+    protected void doValidateEntityBeforeCreate(SmeVo dto, Sme entity) {
+        Optional<Sme> sme = smeRepo.findByCode(dto.getCode());
+        if (sme.isPresent()) {
+            AppExceptionResponse ex = new AppExceptionResponse(AppErrorKeys.EXIST_SME);
+            log.error(ex);
+            throw ex;
+        }
     }
 
     @Override
