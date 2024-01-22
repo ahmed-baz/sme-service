@@ -37,14 +37,14 @@ public class SmeController {
 
     @SuperAdminOnly
     @PostMapping
-    public AppResponse<SmeVo> addSme(@RequestBody SmeVo user) {
-        return new AppResponse<>(smeService.addSme(user));
+    public AppResponse<SmeVo> addSme(@RequestBody SmeVo vo) {
+        return new AppResponse<>(smeService.addSme(vo));
     }
 
     @SuperAdminOnly
     @PutMapping("/{id}")
-    public AppResponse<SmeVo> updateSme(@PathVariable Long id, @RequestBody SmeVo user) {
-        return new AppResponse<>(smeService.updateSme(id, user));
+    public AppResponse<SmeVo> updateSme(@PathVariable Long id, @RequestBody SmeVo vo) {
+        return new AppResponse<>(smeService.updateSme(id, vo));
     }
 
     @SuperAdminOnly
