@@ -2,10 +2,8 @@ package com.sme.app.service;
 
 import com.sme.app.criteria.EmployeeCriteria;
 import com.sme.app.integration.model.EmployeeVO;
-import com.sme.app.vo.employee.EmployeeSalaryVo;
 import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.PageResponse;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -32,11 +30,5 @@ public interface EmployeeService {
     boolean deleteEmployee(Long id);
 
     EmployeeVO findEmployeeById(Long id);
-
-    List<EmployeeSalaryVo> getSalariesCountMV();
-
-    List<EmployeeSalaryVo> getSalariesCount();
-
-    void refreshView();
 
 }

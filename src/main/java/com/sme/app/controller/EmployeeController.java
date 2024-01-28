@@ -4,10 +4,8 @@ import com.sme.app.criteria.EmployeeCriteria;
 import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.integration.model.EmployeeVO;
 import com.sme.app.permission.annotations.MakerOnly;
-import com.sme.app.permission.annotations.SuperAdminOnly;
 import com.sme.app.service.EmployeeService;
 import com.sme.app.service.UserExecutorService;
-import com.sme.app.vo.employee.EmployeeSalaryVo;
 import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import com.sme.app.vo.payload.PageResponse;
@@ -16,7 +14,10 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -25,10 +26,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.sme.app.exception.AppErrorKeys.*;
-
-
 import java.util.List;
+
+import static com.sme.app.exception.AppErrorKeys.*;
 
 
 @RestController
@@ -108,25 +108,6 @@ public class EmployeeController {
     @DeleteMapping("/{id}")
     public AppResponse<Boolean> deleteEmployee(@PathVariable Long id) {
         return new AppResponse<>(employeeService.deleteEmployee(id));
-    }
-
-    @SuperAdminOnly
-    @GetMapping("/mv/salary")
-    public AppResponse<List<EmployeeSalaryVo>> getSalariesCountMV() {
-        return new AppResponse<>(employeeService.getSalariesCountMV());
-    }
-
-    @SuperAdminOnly
-    @GetMapping("/view/salary")
-    public AppResponse<List<EmployeeSalaryVo>> getSalariesCount() {
-        return new AppResponse<>(employeeService.getSalariesCount());
-    }
-
-    @SuperAdminOnly
-    @GetMapping("/refresh-view")
-    public AppResponse<Void> refreshView() {
-        employeeService.refreshView();
-        return new AppResponse<>();
     }
 
     private AppResponse<Void> getDefaultIntResponse(Throwable throwable) {

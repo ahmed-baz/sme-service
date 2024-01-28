@@ -170,25 +170,6 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
     }
 
     @Override
-    public List<EmployeeSalaryVo> getSalariesCountMV() {
-        List<EmployeeSalaryMV> all = employeeSalaryMVRepo.findAll();
-        List<EmployeeSalaryVo> list = all.stream().map(data -> EmployeeSalaryVo.builder().code(data.getCode()).count(data.getCount()).sum(data.getSum()).build()).collect(Collectors.toList());
-        return list;
-    }
-
-    @Override
-    public List<EmployeeSalaryVo> getSalariesCount() {
-        List<EmployeeSalaryView> all = employeeSalaryViewRepo.findAll();
-        List<EmployeeSalaryVo> list = all.stream().map(data -> EmployeeSalaryVo.builder().code(data.getCode()).count(data.getCount()).sum(data.getSum()).build()).collect(Collectors.toList());
-        return list;
-    }
-
-    @Override
-    public void refreshView() {
-        employeeSalaryMVRepo.refreshView();
-    }
-
-    @Override
     public BaseMapper<Employee, EmployeeVo> getMapper() {
         return employeeMapper;
     }
