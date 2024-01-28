@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    void createEmployeeListAsync(int userNo);
-
     EmployeeVo findById(Long id);
 
     List<EmployeeVo> findList();

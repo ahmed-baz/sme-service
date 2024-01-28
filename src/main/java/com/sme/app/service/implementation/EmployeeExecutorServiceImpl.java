@@ -3,14 +3,18 @@ package com.sme.app.service.implementation;
 import com.sme.app.entity.employee.Employee;
 import com.sme.app.mapper.EmployeeMapper;
 import com.sme.app.repo.employee.EmployeeRepo;
-import com.sme.app.service.UserExecutorService;
+import com.sme.app.service.EmployeeExecutorService;
+import com.sme.app.service.SmeService;
 import com.sme.app.utils.EmployeeUtil;
+import com.sme.app.utils.SmeUtil;
+import com.sme.app.vo.SmeVo;
 import com.sme.app.vo.employee.EmployeeVo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -22,13 +26,15 @@ import java.util.concurrent.*;
 @Getter
 @Log4j2
 @Service
-public class UserExecutorServiceImpl implements UserExecutorService {
+public class EmployeeExecutorServiceImpl implements EmployeeExecutorService {
 
     private Integer limit = 10;
     @Autowired
     private EmployeeRepo employeeRepo;
     @Autowired
     private EmployeeMapper employeeMapper;
+    @Autowired
+    private SmeService smeService;
     private final ExecutorService executorService = Executors.newFixedThreadPool(limit);
     private final List<Callable<List<Employee>>> callables = new ArrayList<>();
 
@@ -61,8 +67,18 @@ public class UserExecutorServiceImpl implements UserExecutorService {
         return employeeList;
     };
 
-    public UserExecutorServiceImpl(EmployeeRepo employeeRepo) {
+    public EmployeeExecutorServiceImpl(EmployeeRepo employeeRepo) {
         this.employeeRepo = employeeRepo;
+    }
+
+    @Async
+    @Override
+    public void createEmployeeListAsync(int userNo) {
+        List<SmeVo> smes = smeService.findAllSmes();
+        List<EmployeeVo> employeeList = EmployeeUtil.getEmployeeList(userNo, 1);
+        List<Employee> employees = employeeMapper.voListToEntityList(employeeList);
+        employees.forEach(employee -> employee.setSme(SmeUtil.anySme(smes)));
+        employeeRepo.saveAll(employees);
     }
 
     @SneakyThrows

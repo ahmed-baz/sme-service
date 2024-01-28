@@ -5,7 +5,7 @@ import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.integration.model.EmployeeVO;
 import com.sme.app.permission.annotations.MakerOnly;
 import com.sme.app.service.EmployeeService;
-import com.sme.app.service.UserExecutorService;
+import com.sme.app.service.EmployeeExecutorService;
 import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import com.sme.app.vo.payload.PageResponse;
@@ -39,11 +39,11 @@ public class EmployeeController {
 
     private static final Logger logger = LogManager.getLogger(EmployeeController.class);
     private final EmployeeService employeeService;
-    private final UserExecutorService userExecutorService;
+    private final EmployeeExecutorService employeeExecutorService;
 
     @PostMapping("/list/db/{size}")
     public AppResponse<PageResponse<EmployeeVo>> createEmployeeList(@PathVariable int size) {
-        List<EmployeeVo> employeeList = userExecutorService.createEmployeeList(size);
+        List<EmployeeVo> employeeList = employeeExecutorService.createEmployeeList(size);
         return new AppResponse<>(new PageResponse<>(employeeList));
     }
 
@@ -82,7 +82,7 @@ public class EmployeeController {
 
     @PostMapping("/list/async/{size}")
     public AppResponse<Void> createEmployeeListAsync(@PathVariable int size) {
-        employeeService.createEmployeeListAsync(size);
+        employeeExecutorService.createEmployeeListAsync(size);
         return new AppResponse<>();
     }
 

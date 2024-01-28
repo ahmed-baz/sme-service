@@ -62,16 +62,6 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
     private final EmployeeSalaryMVRepo employeeSalaryMVRepo;
     private final SmeService smeService;
 
-    @Async
-    @Override
-    public void createEmployeeListAsync(int userNo) {
-        List<SmeVo> smes = smeService.findAllSmes();
-        List<EmployeeVo> employeeList = EmployeeUtil.getEmployeeList(userNo, 1);
-        List<Employee> employees = employeeMapper.voListToEntityList(employeeList);
-        employees.forEach(employee -> employee.setSme(SmeUtil.anySme(smes)));
-        employeeRepo.saveAll(employees);
-    }
-
     @Override
     public EmployeeVo findById(Long id) {
         Optional<Employee> employee = employeeRepo.findById(id);
