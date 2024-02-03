@@ -17,10 +17,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableCaching
 @EnableEncryptableProperties
-public class SMEApp {
+public class SmeService {
 
     public static void main(String[] args) {
-        SpringApplication.run(SMEApp.class, args);
+        SpringApplication.run(SmeService.class, args);
     }
 
 }
