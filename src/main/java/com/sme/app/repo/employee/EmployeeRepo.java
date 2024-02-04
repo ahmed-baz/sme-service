@@ -17,6 +17,8 @@ public interface EmployeeRepo extends BaseRepo<Employee> {
 
     Optional<EmployeeView> findEmployeeByEmail(String email);
 
+    Optional<Employee> findByEmail(String email);
+
     @Override
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "employee_entity_graph")
     List<Employee> findAll();
