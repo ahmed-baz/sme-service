@@ -14,11 +14,10 @@ import java.util.concurrent.TimeUnit;
 @UtilityClass
 public class EmployeeUtil {
 
-    private String names[] = {"Ahmed", "Ali", "Hassan", "Mohamed", "Said", "Saad", "Mostafa", "Ibrahim"};
-    private String mail[] = {"fawry.com", "gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "new.markets.com", "stc.com", "stc.pay.com"};
-    private BigDecimal salary[] = {BigDecimal.valueOf(5000), BigDecimal.valueOf(6000), BigDecimal.valueOf(7000), BigDecimal.valueOf(8000), BigDecimal.valueOf(9000), BigDecimal.valueOf(10000), BigDecimal.valueOf(11000), BigDecimal.valueOf(12000)};
-    private int max = 7;
-    private int min = 0;
+    private final String[] names = {"Ahmed", "Ali", "Hassan", "Mohamed", "Said", "Saad", "Mostafa", "Ibrahim"};
+    private final String[] mail = {"fawry.com", "gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "new.markets.com", "stc.com", "stc.pay.com"};
+    private final int max = 7;
+    private final int min = 0;
 
     @SneakyThrows
     public EmployeeVo createRandomEmployee(long sleep) {
@@ -32,14 +31,19 @@ public class EmployeeUtil {
         employee.setId(getRandomId());
         employee.setFirstName(names[getRandomIndex()]);
         employee.setLastName(names[getRandomIndex()]);
-        StringBuilder email = new StringBuilder(employee.getFirstName()).append(".")
-                .append(employee.getLastName()).append("_")
-                .append(getRandomInt()).append("@")
-                .append(mail[getRandomIndex()]);
-        employee.setEmail(email.toString().toLowerCase(Locale.ROOT));
-        employee.setSalary(salary[getRandomIndex()]);
+        String email = employee.getFirstName() + "." +
+                employee.getLastName() + "_" +
+                getRandomInt() + "@" +
+                mail[getRandomIndex()];
+        employee.setEmail(email.toLowerCase(Locale.ROOT));
+        employee.setSalary(generateRandomSalary(5000, 50000));
         employee.setJoinDate(getRandomDate());
         return employee;
+    }
+
+    public BigDecimal generateRandomSalary(int min, int max) {
+        int random = min + (int) (Math.random() * ((max - min) + 1));
+        return BigDecimal.valueOf((random / 1000) * 1000);
     }
 
     public List<EmployeeVo> getEmployeeList(int size) {
