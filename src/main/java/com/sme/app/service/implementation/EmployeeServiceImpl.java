@@ -5,8 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.sme.app.criteria.EmployeeCriteria;
 import com.sme.app.entity.employee.Employee;
-import com.sme.app.entity.employee.EmployeeSalaryMV;
-import com.sme.app.entity.employee.EmployeeSalaryView;
 import com.sme.app.entity.employee.EmployeeView;
 import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.exception.AppExceptionResponse;
@@ -21,10 +19,7 @@ import com.sme.app.repo.employee.EmployeeSalaryViewRepo;
 import com.sme.app.service.EmployeeService;
 import com.sme.app.service.SmeService;
 import com.sme.app.specification.EmployeeSpecifications;
-import com.sme.app.utils.EmployeeUtil;
-import com.sme.app.utils.SmeUtil;
 import com.sme.app.vo.SmeVo;
-import com.sme.app.vo.employee.EmployeeSalaryVo;
 import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import com.sme.app.vo.payload.PageResponse;
@@ -37,14 +32,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -120,6 +113,21 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
             throw new AppExceptionResponse(AppErrorKeys.INVALID_SME, HttpStatus.BAD_REQUEST);
         }
         return add(employeeVo);
+    }
+
+    @Override
+    public EmployeeVo updateEmployee(EmployeeVo employeeVo) {
+        return update(employeeVo.getId(), employeeVo);
+    }
+
+    @Override
+    public EmployeeVo doDummyUpdate() {
+        Employee employee = employeeRepo.findRandom();
+        AppResponse<EmployeeVO> appResponse = employeeClient.findByEmail(employee.getEmail());
+        EmployeeVO empData = appResponse.getData();
+        employee.setSalary(empData.getSalary());
+        employeeRepo.save(employee);
+        return employeeMapper.entityToVo(employee);
     }
 
     @Override

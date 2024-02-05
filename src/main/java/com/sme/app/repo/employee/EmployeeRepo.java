@@ -7,6 +7,7 @@ import com.sme.app.repo.BaseRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public interface EmployeeRepo extends BaseRepo<Employee> {
     Optional<EmployeeView> findEmployeeByEmail(String email);
 
     Optional<Employee> findByEmail(String email);
+
+    @Query(value = "SELECT * FROM EMPLOYEE ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
+    Employee findRandom();
 
     @Override
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "employee_entity_graph")

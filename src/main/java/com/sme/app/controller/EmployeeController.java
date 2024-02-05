@@ -4,8 +4,8 @@ import com.sme.app.criteria.EmployeeCriteria;
 import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.integration.model.EmployeeVO;
 import com.sme.app.permission.annotations.MakerOnly;
-import com.sme.app.service.EmployeeService;
 import com.sme.app.service.EmployeeExecutorService;
+import com.sme.app.service.EmployeeService;
 import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.AppResponse;
 import com.sme.app.vo.payload.PageResponse;
@@ -108,6 +108,16 @@ public class EmployeeController {
     @DeleteMapping("/{id}")
     public AppResponse<Boolean> deleteEmployee(@PathVariable Long id) {
         return new AppResponse<>(employeeService.deleteEmployee(id));
+    }
+
+    @PutMapping
+    public AppResponse<EmployeeVo> updateEmployee(@RequestBody EmployeeVo employeeVo) {
+        return new AppResponse<>(employeeService.updateEmployee(employeeVo));
+    }
+
+    @GetMapping("dummy")
+    public AppResponse<EmployeeVo> doDummyUpdate() {
+        return new AppResponse<>(employeeService.doDummyUpdate());
     }
 
     private AppResponse<Void> getDefaultIntResponse(Throwable throwable) {

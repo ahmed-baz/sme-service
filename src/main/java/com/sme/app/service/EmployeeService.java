@@ -23,10 +23,14 @@ public interface EmployeeService {
 
     EmployeeVo createEmployee(String smeCode, EmployeeVo employeeVo);
 
+    EmployeeVo updateEmployee(EmployeeVo employeeVo);
+
     EmployeeVO findEmpById(Long id);
 
     boolean deleteEmployee(Long id);
 
     EmployeeVO findEmployeeById(Long id);
+
+    EmployeeVo doDummyUpdate();
 
 }
