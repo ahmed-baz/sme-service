@@ -1,6 +1,10 @@
 package com.sme.app.service.implementation;
 
 import com.sme.app.entity.employee.Employee;
+import com.sme.app.integration.client.EmployeeClient;
+import com.sme.app.integration.model.BaseData;
+import com.sme.app.integration.model.DepartmentVO;
+import com.sme.app.integration.model.EmployeeVO;
 import com.sme.app.mapper.EmployeeMapper;
 import com.sme.app.repo.employee.EmployeeRepo;
 import com.sme.app.service.EmployeeExecutorService;
@@ -37,6 +41,8 @@ public class EmployeeExecutorServiceImpl implements EmployeeExecutorService {
     private SmeService smeService;
     private final ExecutorService executorService = Executors.newFixedThreadPool(limit);
     private final List<Callable<List<Employee>>> callables = new ArrayList<>();
+    @Autowired
+    private EmployeeClient employeeClient;
 
     Runnable runnableTask = () -> {
         long start = System.nanoTime();
@@ -78,6 +84,14 @@ public class EmployeeExecutorServiceImpl implements EmployeeExecutorService {
         List<EmployeeVo> employeeList = EmployeeUtil.getEmployeeList(userNo, 1);
         List<Employee> employees = employeeMapper.voListToEntityList(employeeList);
         employees.forEach(employee -> employee.setSme(SmeUtil.anySme(smes)));
+        List<EmployeeVO> list = employees.stream()
+                .map(employee ->
+                        EmployeeVO.builder()
+                                .baseData(new BaseData(employee.getFirstName(), employee.getLastName(), employee.getEmail()))
+                                .department(DepartmentVO.builder().id(employee.getSme().getId().intValue()).build())
+                                .salary(employee.getSalary())
+                                .build()).toList();
+        employeeClient.addEmployeeList(list);
         employeeRepo.saveAll(employees);
     }
 

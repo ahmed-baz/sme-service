@@ -1,10 +1,7 @@
 package com.sme.app.integration.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -14,9 +11,10 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class EmployeeVO {
 
-    private int id;
+    private Long id;
     private BaseData baseData;
     private DepartmentVO department;
     private JobVO job;
