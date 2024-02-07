@@ -29,4 +29,5 @@
 - [ ] Jasypt
 - [ ] Docker
 - [ ] Docker Compose
+- [ ] kubernetes
 - [ ] Integration with Prometheus and Grafana
