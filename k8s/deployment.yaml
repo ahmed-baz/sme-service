@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sme
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sme-app
+  template:
+    metadata:
+      labels:
+        app: sme-app
+    spec:
+      containers:
+        - name: sme
+          image: ahmedbaz/sme-service:1.1
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: sme-db-secret
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sme-db-secret
+                  key: password
+        - name: eureka
+          image: ahmedbaz/eureka-server:1.2.0
+        - name: redis
+          image: redis:alpine3.17
