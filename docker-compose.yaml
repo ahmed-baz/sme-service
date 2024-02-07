@@ -1,6 +1,14 @@
 version: '3.8'
 
 services:
+
+  eureka:
+    image: ahmedbaz/eureka-server:1.2.0
+    ports:
+      - "8761:8761"
+    networks:
+      - sme-network
+
   sme-service-db:
     image: postgres:alpine3.17
     environment:
@@ -44,6 +52,7 @@ services:
     depends_on:
       - redis
       - sme-service-db
+      - eureka
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://sme-service-db:5432/sme_db
       SPRING_DATASOURCE_USERNAME: postgres
@@ -59,6 +68,7 @@ services:
       - "8888:8888"
     depends_on:
       - emp-service-db
+      - eureka
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://emp-service-db:5123/employee_db
       SPRING_DATASOURCE_USERNAME: postgres
