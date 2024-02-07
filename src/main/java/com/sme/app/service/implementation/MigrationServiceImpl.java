@@ -40,30 +40,17 @@ public class MigrationServiceImpl implements MigrationService {
 
     @Override
     public void createDummyCsv() {
-        // first create file object for file placed at location
-        // specified by filepath
         File file = new File(employeeFilePath);
         List<Employee> all = employeeRepo.findAll();
         createCsv(file, EMPLOYEE_HEADER, all);
     }
 
     private void createCsv(File file, String[] header, List<Employee> all) {
-        try {
-            // create FileWriter object with file as parameter
-            FileWriter fileWriter = new FileWriter(file);
-
-            // create CSVWriter object fileWriter object as parameter
-            CSVWriter writer = new CSVWriter(fileWriter);
-
+        try (FileWriter fileWriter = new FileWriter(file); CSVWriter writer = new CSVWriter(fileWriter)) {
             // adding header to csv
             writer.writeNext(header);
-
             // add data to csv
-
             all.forEach(employee -> writer.writeNext(new String[]{employee.getFirstName(), employee.getLastName(), employee.getEmail()}));
-
-            // closing writer connection
-            writer.close();
         } catch (IOException e) {
             log.error(e);
         }
