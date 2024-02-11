@@ -14,8 +14,6 @@ import com.sme.app.mapper.BaseMapper;
 import com.sme.app.mapper.EmployeeMapper;
 import com.sme.app.repo.BaseRepo;
 import com.sme.app.repo.employee.EmployeeRepo;
-import com.sme.app.repo.employee.EmployeeSalaryMVRepo;
-import com.sme.app.repo.employee.EmployeeSalaryViewRepo;
 import com.sme.app.service.EmployeeService;
 import com.sme.app.service.SmeService;
 import com.sme.app.specification.EmployeeSpecifications;
@@ -51,9 +49,8 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
     private String empServiceBaseUrl;
     private final Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
     private final EmployeeClient employeeClient;
-    private final EmployeeSalaryViewRepo employeeSalaryViewRepo;
-    private final EmployeeSalaryMVRepo employeeSalaryMVRepo;
     private final SmeService smeService;
+    private final EmployeeServiceRPC employeeServiceRPC;
 
     @Override
     public EmployeeVo findById(Long id) {
@@ -143,6 +140,11 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
             log.error(ex);
         }
         throw new AppExceptionResponse(errorCode != null ? errorCode : AppErrorKeys.INTEGRATION_ISSUE, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public EmployeeVo findStaffById(Long id) {
+        return employeeServiceRPC.findById(id);
     }
 
     @Override

@@ -31,6 +31,8 @@ public interface EmployeeService {
 
     EmployeeVO findEmployeeById(Long id);
 
+    EmployeeVo findStaffById(Long id);
+
     EmployeeVo doDummyUpdate();
 
 }
