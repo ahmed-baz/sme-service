@@ -20,12 +20,25 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: sme-db-secret
-                  key: username
+                  key: sme_username
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: sme-db-secret
-                  key: password
+                  key: sme_password
+        - name: emp
+          image: ahmedbaz/employee-service:1.0
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: sme-db-secret
+                  key: emp_username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sme-db-secret
+                  key: emp_password
         - name: eureka
           image: ahmedbaz/eureka-server:1.2.0
         - name: redis

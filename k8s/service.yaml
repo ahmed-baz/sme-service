@@ -18,4 +18,8 @@ spec:
       name: redis
       port: 6379
       targetPort: 6379
+    - protocol: TCP
+      name: emp
+      port: 8888
+      targetPort: 8888
   type: NodePort
