@@ -31,3 +31,4 @@
 - [ ] Docker Compose
 - [ ] kubernetes
 - [ ] Integration with Prometheus and Grafana
+- [ ] apply integration with staff-service using gRPC
