@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EmployeeVO {
+public class SmeEmployeeVO {
 
     private Long id;
     private BaseData baseData;

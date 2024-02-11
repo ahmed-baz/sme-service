@@ -1,7 +1,7 @@
 package com.sme.app.integration.client;
 
 
-import com.sme.app.integration.model.EmployeeVO;
+import com.sme.app.integration.model.SmeEmployeeVO;
 import com.sme.app.vo.payload.AppResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +15,15 @@ import java.util.List;
 public interface EmployeeClient {
 
     @GetMapping("/{id}")
-    AppResponse<EmployeeVO> findEmployeeById(@PathVariable Long id);
+    AppResponse<SmeEmployeeVO> findEmployeeById(@PathVariable Long id);
 
     @GetMapping("/find/{email}")
-    AppResponse<EmployeeVO> findByEmail(@PathVariable String email);
+    AppResponse<SmeEmployeeVO> findByEmail(@PathVariable String email);
 
     @PostMapping("/list")
-    AppResponse<List<EmployeeVO>> addEmployeeList(@RequestBody List<EmployeeVO> employees);
+    AppResponse<List<SmeEmployeeVO>> addEmployeeList(@RequestBody List<SmeEmployeeVO> employees);
 
     @PostMapping
-    AppResponse<EmployeeVO> addEmployee(@RequestBody EmployeeVO employeeVO);
+    AppResponse<SmeEmployeeVO> addEmployee(@RequestBody SmeEmployeeVO smeEmployeeVO);
 
 }

@@ -14,5 +14,5 @@ public class DepartmentVO {
 
     private int id;
     private String name;
-    private List<EmployeeVO> employees = new ArrayList<>(0);
+    private List<SmeEmployeeVO> employees = new ArrayList<>(0);
 }

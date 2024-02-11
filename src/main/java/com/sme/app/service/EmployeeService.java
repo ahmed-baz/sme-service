@@ -1,7 +1,7 @@
 package com.sme.app.service;
 
 import com.sme.app.criteria.EmployeeCriteria;
-import com.sme.app.integration.model.EmployeeVO;
+import com.sme.app.integration.model.SmeEmployeeVO;
 import com.sme.app.vo.employee.EmployeeVo;
 import com.sme.app.vo.payload.PageResponse;
 
@@ -25,11 +25,11 @@ public interface EmployeeService {
 
     EmployeeVo updateEmployee(EmployeeVo employeeVo);
 
-    EmployeeVO findEmpById(Long id);
+    SmeEmployeeVO findEmpById(Long id);
 
     boolean deleteEmployee(Long id);
 
-    EmployeeVO findEmployeeById(Long id);
+    SmeEmployeeVO findEmployeeById(Long id);
 
     EmployeeVo findStaffById(Long id);
 

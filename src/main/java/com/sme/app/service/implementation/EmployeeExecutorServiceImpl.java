@@ -4,7 +4,7 @@ import com.sme.app.entity.employee.Employee;
 import com.sme.app.integration.client.EmployeeClient;
 import com.sme.app.integration.model.BaseData;
 import com.sme.app.integration.model.DepartmentVO;
-import com.sme.app.integration.model.EmployeeVO;
+import com.sme.app.integration.model.SmeEmployeeVO;
 import com.sme.app.mapper.EmployeeMapper;
 import com.sme.app.repo.employee.EmployeeRepo;
 import com.sme.app.service.EmployeeExecutorService;
@@ -84,9 +84,9 @@ public class EmployeeExecutorServiceImpl implements EmployeeExecutorService {
         List<EmployeeVo> employeeList = EmployeeUtil.getEmployeeList(userNo, 1);
         List<Employee> employees = employeeMapper.voListToEntityList(employeeList);
         employees.forEach(employee -> employee.setSme(SmeUtil.anySme(smes)));
-        List<EmployeeVO> list = employees.stream()
+        List<SmeEmployeeVO> list = employees.stream()
                 .map(employee ->
-                        EmployeeVO.builder()
+                        SmeEmployeeVO.builder()
                                 .baseData(new BaseData(employee.getFirstName(), employee.getLastName(), employee.getEmail()))
                                 .department(DepartmentVO.builder().id(employee.getSme().getId().intValue()).build())
                                 .salary(employee.getSalary())

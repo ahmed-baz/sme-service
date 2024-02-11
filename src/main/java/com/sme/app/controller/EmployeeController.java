@@ -2,7 +2,7 @@ package com.sme.app.controller;
 
 import com.sme.app.criteria.EmployeeCriteria;
 import com.sme.app.exception.AppErrorKeys;
-import com.sme.app.integration.model.EmployeeVO;
+import com.sme.app.integration.model.SmeEmployeeVO;
 import com.sme.app.permission.annotations.MakerOnly;
 import com.sme.app.service.EmployeeExecutorService;
 import com.sme.app.service.EmployeeService;
@@ -101,7 +101,7 @@ public class EmployeeController {
     @Retry(name = "findEmpById-api", fallbackMethod = "getDefaultIntResponse")
     @RateLimiter(name = "findEmpById-api")
     @Bulkhead(name = "findEmpById-api")
-    public AppResponse<EmployeeVO> findEmployee(@PathVariable Long id) {
+    public AppResponse<SmeEmployeeVO> findEmployee(@PathVariable Long id) {
         return new AppResponse<>(employeeService.findEmpById(id));
     }
 

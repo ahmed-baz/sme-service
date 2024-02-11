@@ -9,7 +9,7 @@ import com.sme.app.entity.employee.EmployeeView;
 import com.sme.app.exception.AppErrorKeys;
 import com.sme.app.exception.AppExceptionResponse;
 import com.sme.app.integration.client.EmployeeClient;
-import com.sme.app.integration.model.EmployeeVO;
+import com.sme.app.integration.model.SmeEmployeeVO;
 import com.sme.app.mapper.BaseMapper;
 import com.sme.app.mapper.EmployeeMapper;
 import com.sme.app.repo.BaseRepo;
@@ -120,18 +120,18 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
     @Override
     public EmployeeVo doDummyUpdate() {
         Employee employee = employeeRepo.findRandom();
-        AppResponse<EmployeeVO> appResponse = employeeClient.findByEmail(employee.getEmail());
-        EmployeeVO empData = appResponse.getData();
+        AppResponse<SmeEmployeeVO> appResponse = employeeClient.findByEmail(employee.getEmail());
+        SmeEmployeeVO empData = appResponse.getData();
         employee.setSalary(empData.getSalary());
         employeeRepo.save(employee);
         return employeeMapper.entityToVo(employee);
     }
 
     @Override
-    public EmployeeVO findEmpById(Long id) {
+    public SmeEmployeeVO findEmpById(Long id) {
         String errorCode = null;
         try {
-            AppResponse<EmployeeVO> response = employeeClient.findEmployeeById(id);
+            AppResponse<SmeEmployeeVO> response = employeeClient.findEmployeeById(id);
             if (HttpStatus.OK.equals(response.getStatus())) {
                 return response.getData();
             }
@@ -154,12 +154,12 @@ public class EmployeeServiceImpl extends SmeManagerImpl<Employee, EmployeeVo, Em
     }
 
     @Override
-    public EmployeeVO findEmployeeById(Long id) {
+    public SmeEmployeeVO findEmployeeById(Long id) {
         String url = empServiceBaseUrl + "employee/" + id;
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
-        Type typeMyType = new TypeToken<AppResponse<EmployeeVO>>() {
+        Type typeMyType = new TypeToken<AppResponse<SmeEmployeeVO>>() {
         }.getType();
-        AppResponse<EmployeeVO> appResponse = gson.fromJson(responseEntity.getBody(), typeMyType);
+        AppResponse<SmeEmployeeVO> appResponse = gson.fromJson(responseEntity.getBody(), typeMyType);
         if (appResponse != null && HttpStatus.OK.equals(appResponse.getStatus()) && appResponse.getData() != null) {
             return appResponse.getData();
         } else if (appResponse != null) {
